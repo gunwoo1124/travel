@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry location="C:\Users\Gunwoo\.m2\repository\mysql\mysql-connector-java\8.0.22\mysql-connector-java-8.0.22.jar" />
+
+
+    <context id="context1">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkComments" value="false"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/travel?serverTimezone=Asia/Seoul"
+                        userId="root"
+                        password="!kK30081125"/>
+
+        <javaModelGenerator targetPackage="com._replace" targetProject="C:\git\travel\src\main"/>
+        <sqlMapGenerator targetPackage="com._replace" targetProject="C:\git\travel\src\main"/>
+
+
+        <table schema="travel" tableName="z_member_info" domainObjectName="MemberInfoVO"/>
+
+    </context>
+
+</generatorConfiguration>
+
+
+
+
+
+

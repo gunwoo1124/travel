@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.server.common.dao.MemberInfoDao" >
+
+<resultMap id="BaseResultMap" type="MemberInfoVO" >
+<id column="mb_idx" property="mbIdx" jdbcType="BIGINT" />
+<result column="mb_id" property="mbId" jdbcType="VARCHAR" />
+</resultMap>
+
+<resultMap id="ApiResultMap" type="MemberInfoVOForApi" >
+<result column="mb_idx" property="memberIndex" jdbcType="BIGINT" />
+<result column="mb_id" property="memberId" jdbcType="VARCHAR" />
+</resultMap>
+
+<sql id="Base_Column_List" >*</sql>
+<sql id="Api_Column_List" >*</sql>
+
+<sql id="BaseSearchQuery">
+<trim suffixOverrides="AND">
+<if test="queryColumn != null and search != ''">
+<if test="queryColumn == 'all'">
+(
+mb_idx = #{search}
+) AND
+</if>
+</if>
+<if test="mbIdx != null">mb_idx = #{mbIdx} AND</if>
+<if test="mbId != null">mb_id = #{mbId} AND</if>
+
+</trim>
+</sql>
+
+<select id="selectForApi" resultMap="ApiResultMap">SELECT <include refid="Api_Column_List"/> FROM z_member_info WHERE mb_idx = #{idx} </select>
+<select id="selectByIndex" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info WHERE mb_idx = #{idx} </select>
+<select id="selectById" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info WHERE mb_id = #{mbId} </select>
+<select id="selectBySearch" parameterType="hashmap" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info <where><include refid="BaseSearchQuery"/></where><if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if><if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if><if test="limit != null">LIMIT #{limit}</if></select>
+<select id="selectAll" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info</select>
+<select id="countBySearch" parameterType="hashmap" resultType="Long">SELECT COUNT(*) FROM z_member_info <where><include refid="BaseSearchQuery"/></where></select>
+<select id="countAll" resultType="Long">SELECT COUNT(*) FROM z_member_info</select>
+<delete id="deleteByIndex" parameterType="java.lang.Long" ></delete>
+
+<insert id="insert" parameterType="MemberInfoVO" >
+insert into z_member_info
+<trim prefix="(" suffix=")" suffixOverrides="," >
+
+<if test="mbId != null" >mb_id,</if>
+</trim>
+<trim prefix="values (" suffix=")" suffixOverrides="," >
+
+<if test="mbId != null" >#{mbId,jdbcType=VARCHAR},</if>
+</trim>
+</insert>
+
+<update id="update" parameterType="MemberInfoVO" >
+update z_member_info
+<set >
+<if test="mbId != null" >mb_id = #{mbId,jdbcType=VARCHAR},</if>
+</set>where mb_idx = #{mbIdx,jdbcType=BIGINT}</update>
+
+</mapper>

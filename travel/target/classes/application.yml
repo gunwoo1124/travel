@@ -1,0 +1,44 @@
+#server.port=9091
+#server.tomcat.basedir=TomcatBoot
+#
+#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+#spring.datasource.url=jdbc:mysql://localhost:3306/travel
+#spring.datasource.username=root
+#spring.datasource.password=1234
+
+
+spring:
+  profiles:
+    group:
+      development:
+        - test_database
+
+#      production:
+#        - production_database
+#        - common
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test_database
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/travel
+    username: root
+    password: 1234
+server:
+  port: 9091
+
+---
+#spring:
+#  config:
+#    activate:
+#      on-profile: production_database
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/prod
+#    username: admin
+#    password: ENC(vSpxksB2NjXRraSwGrLNi1DjiDO5fQ/I)
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#server:
+#  port: 9000
