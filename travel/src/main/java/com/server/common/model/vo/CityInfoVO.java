@@ -20,7 +20,7 @@ public class CityInfoVO
     private Date ctDeleteDate;
     private String ctNameKr;
     private String ctNameEn;
-    private String ctCountry;
+    private String ctCountryEn;
     private Long ctLikeCount;
 
 }

@@ -9,8 +9,20 @@
 <result column="ct_delete_date" property="ctDeleteDate" jdbcType="TIMESTAMP" />
 <result column="ct_name_kr" property="ctNameKr" jdbcType="VARCHAR" />
 <result column="ct_name_en" property="ctNameEn" jdbcType="VARCHAR" />
-<result column="ct_country" property="ctCountry" jdbcType="VARCHAR" />
+<result column="ct_country_en" property="ctCountryEn" jdbcType="VARCHAR" />
 <result column="ct_like_count" property="ctLikeCount" jdbcType="BIGINT" />
+</resultMap>
+
+<resultMap id="ApiResultMap" type="CityInfoVOForApi" >
+<result column="ct_idx" property="cityIndex" jdbcType="BIGINT" />
+<result column="ct_state" property="state" jdbcType="TINYINT" />
+<result column="ct_create_date" property="createDate" jdbcType="TIMESTAMP" />
+<result column="ct_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+<result column="ct_delete_date" property="deleteDate" jdbcType="TIMESTAMP" />
+<result column="ct_name_kr" property="cityNameKr" jdbcType="VARCHAR" />
+<result column="ct_name_en" property="cityNameEng" jdbcType="VARCHAR" />
+<result column="ct_country_en" property="country" jdbcType="VARCHAR" />
+<result column="ct_like_count" property="likeCount" jdbcType="BIGINT" />
 </resultMap>
 
 <sql id="Base_Column_List" >*</sql>
@@ -29,7 +41,7 @@ LOWER (ct_name_kr) = LOWER (#{search}) OR LOWER (ct_name_en) LIKE CONCAT(LOWER (
 <if test="ctState != null">ct_state = #{ctState} AND</if>
 <if test="ctNameKr!= null">ct_name_kr = #{ctNameKr} AND</if>
 <if test="ctNameEn!= null">ct_name_en = #{ctNameEn} AND</if>
-<if test="ctCountry!= null">ct_country = #{ctCountry} AND</if>
+<if test="ctCountryEn!= null">ct_country_en = #{ctCountryEn} AND</if>
 <if test="ctLikeCount != null">ct_like_count = #{ctLikeCount} AND</if>
 <if test="searchStartDate != null and searchStartDate != ''">ct_create_date >= #{searchStartDate} AND</if>
 <if test="searchEndDate != null and searchEndDate != ''">#{searchEndDate} >= ct_create_date AND</if>
@@ -57,7 +69,7 @@ insert into z_city_info
 <if test="ctDeleteDate != null" >ct_delete_date,</if>
 <if test="ctNameKr != null" >ct_name_kr,</if>
 <if test="ctNameEn != null" >ct_name_en,</if>
-<if test="ctCountry != null" >ct_country,</if>
+<if test="ctCountryEn != null" >ct_country_en,</if>
 <if test="ctLikeCount != null" >ct_like_count,</if>
 </trim>
 <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -68,7 +80,7 @@ insert into z_city_info
 <if test="ctDeleteDate != null" >#{ctDeleteDate,jdbcType=TIMESTAMP},</if>
 <if test="ctNameKr != null" >#{ctNameKr,jdbcType=VARCHAR},</if>
 <if test="ctNameEn != null" >#{ctNameEn,jdbcType=VARCHAR},</if>
-<if test="ctCountry != null" >#{ctCountry,jdbcType=VARCHAR},</if>
+<if test="ctCountryEn != null" >#{ctCountryEn,jdbcType=VARCHAR},</if>
 <if test="ctLikeCount != null" >#{ctLikeCount,jdbcType=BIGINT},</if>
 </trim>
 </insert>
@@ -82,7 +94,7 @@ update z_city_info
 <if test="ctDeleteDate != null" >ct_delete_date = #{ctDeleteDate,jdbcType=TIMESTAMP},</if>
 <if test="ctNameKr != null" >ct_name_kr = #{ctNameKr,jdbcType=VARCHAR},</if>
 <if test="ctNameEn != null" >ct_name_en = #{ctNameEn,jdbcType=VARCHAR},</if>
-<if test="ctCountry != null" >ct_country = #{ctCountry,jdbcType=VARCHAR},</if>
+<if test="ctCountryEn != null" >ct_country_en = #{ctCountryEn,jdbcType=VARCHAR},</if>
 <if test="ctLikeCount != null" >ct_like_count = #{ctLikeCount,jdbcType=BIGINT},</if>
 </set>
 where ct_idx = #{ctIdx,jdbcType=BIGINT}

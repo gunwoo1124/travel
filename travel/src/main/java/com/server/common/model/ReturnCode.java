@@ -9,8 +9,16 @@ public enum ReturnCode
 	SUCCESS						(0, "Success"),
 
 	INTERNAL_ERROR				(101, "Internal error"),
-	ID_ERROR					(201, "ID가 NULL입니다."),
+	ID_ERROR					(201, "ID가 NULL 입니다."),
 	ID_ALREADY_EXISTS			(202, "이미 존재하는 ID 입니다."),
+
+	CITY_NAME_ENG_ERROR			(203,"City 영문 이름이 NULL 입니다."),
+	CITY_NAME_KR_ERROR			(204, "City 한글 이름이 NULL 입니다."),
+	COUNTRY_ENG_ERROR			(205, "Country 영문 이름이 NULL 입니다."),
+	CITY_ALREADY_EXISTS			(206, "이미 존재하는 City 입니다."),
+
+
+
 
 
 
