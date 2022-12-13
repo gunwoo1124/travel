@@ -24,6 +24,7 @@ public class RESTApi
         return "Gunwoo";
     }
 
+
     @RequestMapping(method = {RequestMethod.POST}, value = "/user/register" ) public ResUserInfo userRegister(@Valid @RequestBody ReqUserInfo req) { return apiService.userRegister(req); }
 
 }

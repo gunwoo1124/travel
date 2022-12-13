@@ -13,9 +13,7 @@ public class MemberInfoVO
     private Long mbIdx;
 
     private Integer mbState;
-
     @JsonSerialize(using = CustomDateTimeSerializer.class) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date mbCreateDate;
     private String mbId;
-
 }

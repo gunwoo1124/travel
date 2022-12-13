@@ -4,12 +4,17 @@
 
 <resultMap id="BaseResultMap" type="MemberInfoVO" >
 <id column="mb_idx" property="mbIdx" jdbcType="BIGINT" />
+<result column="mb_state" property="mbState" jdbcType="TINYINT" />
+<result column="mb_create_date" property="mbCreateDate" jdbcType="TIMESTAMP" />
 <result column="mb_id" property="mbId" jdbcType="VARCHAR" />
 </resultMap>
 
 <resultMap id="ApiResultMap" type="MemberInfoVOForApi" >
 <result column="mb_idx" property="memberIndex" jdbcType="BIGINT" />
+<result column="mb_state" property="state" jdbcType="TINYINT" />
+<result column="mb_create_date" property="createDate" jdbcType="TIMESTAMP" />
 <result column="mb_id" property="memberId" jdbcType="VARCHAR" />
+
 </resultMap>
 
 <sql id="Base_Column_List" >*</sql>
@@ -25,14 +30,17 @@ mb_idx = #{search}
 </if>
 </if>
 <if test="mbIdx != null">mb_idx = #{mbIdx} AND</if>
+<if test="mbState != null">mb_state = #{mbState} AND</if>
 <if test="mbId != null">mb_id = #{mbId} AND</if>
+<if test="searchStartDate != null and searchStartDate != ''">mb_create_date >= #{searchStartDate} AND</if>
+<if test="searchEndDate != null and searchEndDate != ''">#{searchEndDate} >= mb_create_date AND</if>
 
 </trim>
 </sql>
 
 <select id="selectForApi" resultMap="ApiResultMap">SELECT <include refid="Api_Column_List"/> FROM z_member_info WHERE mb_idx = #{idx} </select>
 <select id="selectByIndex" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info WHERE mb_idx = #{idx} </select>
-<select id="selectById" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info WHERE mb_id = #{mbId} </select>
+<select id="selectById" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info WHERE mb_id = #{mbId} AND mb_state = 1</select>
 <select id="selectBySearch" parameterType="hashmap" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info <where><include refid="BaseSearchQuery"/></where><if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if><if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if><if test="limit != null">LIMIT #{limit}</if></select>
 <select id="selectAll" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_info</select>
 <select id="countBySearch" parameterType="hashmap" resultType="Long">SELECT COUNT(*) FROM z_member_info <where><include refid="BaseSearchQuery"/></where></select>
@@ -42,12 +50,12 @@ mb_idx = #{search}
 <insert id="insert" parameterType="MemberInfoVO" >
 insert into z_member_info
 <trim prefix="(" suffix=")" suffixOverrides="," >
-
 <if test="mbId != null" >mb_id,</if>
+<if test="mbState != null" >mb_state,</if>
 </trim>
 <trim prefix="values (" suffix=")" suffixOverrides="," >
-
 <if test="mbId != null" >#{mbId,jdbcType=VARCHAR},</if>
+<if test="mbState != null" >#{mbState,jdbcType=TINYINT},</if>
 </trim>
 </insert>
 
@@ -55,6 +63,7 @@ insert into z_member_info
 update z_member_info
 <set >
 <if test="mbId != null" >mb_id = #{mbId,jdbcType=VARCHAR},</if>
+<if test="mbState != null" >mb_state = #{mbState,jdbcType=TINYINT},</if>
 </set>where mb_idx = #{mbIdx,jdbcType=BIGINT}</update>
 
 </mapper>

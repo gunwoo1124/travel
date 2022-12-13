@@ -11,9 +11,7 @@ import java.util.Date;
 public class MemberInfoVOForApi
 {
     private Long memberIndex;
-
     private Integer state;
-
     @JsonSerialize(using = CustomDateTimeSerializer.class) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     private String memberId;

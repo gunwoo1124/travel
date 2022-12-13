@@ -10,6 +10,14 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -39,15 +47,46 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/git/travel/travel",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "spring.configuration.checksum": "69266c67e75c946ef9b4144b0554326d"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\git\travel\travel\src\main\java\com\server\common\dao\mybatis\mapper" />
+      <recent name="C:\git\travel\travel\src\main\java\com\server\common\model\vo" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.gunwoo.common.converter" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.DevApplication">
+    <configuration name="travel [mybatis-generator:generate,-X]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="mybatis-generator:generate" />
+                <option value="-X" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
     <configuration name="DevApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="ACTIVE_PROFILES" value="development" />
       <module name="travel" />
@@ -56,6 +95,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Maven.travel [mybatis-generator:generate,-X]" />
+      <item itemvalue="Spring Boot.DevApplication" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -66,7 +109,9 @@
       <option name="presentableId" value="Default" />
       <updated>1670903565850</updated>
       <workItem from="1670903566984" duration="1005000" />
-      <workItem from="1670905722895" duration="4163000" />
+      <workItem from="1670905722895" duration="4322000" />
+      <workItem from="1670915957800" duration="118000" />
+      <workItem from="1670916425960" duration="1167000" />
     </task>
     <servers />
   </component>

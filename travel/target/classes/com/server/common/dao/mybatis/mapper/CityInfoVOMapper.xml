@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.server.common.dao.CityInfoDao" >
+<resultMap id="BaseResultMap" type="CityInfoVO" >
+<id column="ct_idx" property="ctIdx" jdbcType="BIGINT" />
+<result column="ct_state" property="ctState" jdbcType="TINYINT" />
+<result column="ct_create_date" property="ctCreateDate" jdbcType="TIMESTAMP" />
+<result column="ct_update_date" property="ctUpdateDate" jdbcType="TIMESTAMP" />
+<result column="ct_delete_date" property="ctDeleteDate" jdbcType="TIMESTAMP" />
+<result column="ct_name_kr" property="ctNameKr" jdbcType="VARCHAR" />
+<result column="ct_name_en" property="ctNameEn" jdbcType="VARCHAR" />
+<result column="ct_country" property="ctCountry" jdbcType="VARCHAR" />
+<result column="ct_like_count" property="ctLikeCount" jdbcType="BIGINT" />
+</resultMap>
+
+<sql id="Base_Column_List" >*</sql>
+<sql id="Api_Column_List" >*</sql>
+
+<sql id="BaseSearchQuery">
+<trim suffixOverrides="AND">
+<if test="queryColumn != null and search != ''">
+<if test="queryColumn == 'all'">
+(
+LOWER (ct_name_kr) = LOWER (#{search}) OR LOWER (ct_name_en) LIKE CONCAT(LOWER (#{search}), '%')
+) AND
+</if>
+</if>
+<if test="ctIdx != null">ct_idx = #{ctIdx} AND</if>
+<if test="ctState != null">ct_state = #{ctState} AND</if>
+<if test="ctNameKr!= null">ct_name_kr = #{ctNameKr} AND</if>
+<if test="ctNameEn!= null">ct_name_en = #{ctNameEn} AND</if>
+<if test="ctCountry!= null">ct_country = #{ctCountry} AND</if>
+<if test="ctLikeCount != null">ct_like_count = #{ctLikeCount} AND</if>
+<if test="searchStartDate != null and searchStartDate != ''">ct_create_date >= #{searchStartDate} AND</if>
+<if test="searchEndDate != null and searchEndDate != ''">#{searchEndDate} >= ct_create_date AND</if>
+
+</trim>
+</sql>
+
+
+<select id="selectForApi" resultMap="ApiResultMap">SELECT <include refid="Api_Column_List"/>FROM z_city_info  WHERE ct_idx = #{idx} </select>
+<select id="selectBySearchForApi" parameterType="hashmap" resultMap="ApiResultMap">SELECT <include refid="Api_Column_List"/> FROM z_city_info <where> <include refid="BaseSearchQuery"/> </where> <if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if> <if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if> <if test="limit != null">LIMIT #{limit}</if> </select>
+<select id="selectByIndex" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_city_info WHERE ct_idx = #{idx} </select>
+<select id="selectBySearch" parameterType="hashmap" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/>FROM z_city_info<where><include refid="BaseSearchQuery"/></where><if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if><if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if><if test="limit != null">LIMIT #{limit}</if></select>
+<select id="selectAll" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_city_info <if test="orderColumn != null"> Order by ${orderColumn} ${order} </if> <if test="limit != null"> LIMIT #{limit} </if> </select>
+<select id="countBySearch" parameterType="hashmap" resultType="Integer">SELECT COUNT(*) FROM z_city_info <where> <include refid="BaseSearchQuery"/> </where> </select>
+<select id="countAll" resultType="Integer">SELECT COUNT(*) FROM z_city_info </select>
+<delete id="deleteByIndex" parameterType="Integer">DELETE FROM z_city_info WHERE ct_idx = #{idx}</delete>
+
+<insert id="insert" parameterType="CityInfoVO" >
+insert into z_city_info
+<trim prefix="(" suffix=")" suffixOverrides="," >
+<if test="ctIdx != null" >ct_idx,</if>
+<if test="ctState != null" >ct_state,</if>
+<if test="ctCreateDate != null" >ct_create_date,</if>
+<if test="ctUpdateDate != null" >ct_update_date,</if>
+<if test="ctDeleteDate != null" >ct_delete_date,</if>
+<if test="ctNameKr != null" >ct_name_kr,</if>
+<if test="ctNameEn != null" >ct_name_en,</if>
+<if test="ctCountry != null" >ct_country,</if>
+<if test="ctLikeCount != null" >ct_like_count,</if>
+</trim>
+<trim prefix="values (" suffix=")" suffixOverrides="," >
+<if test="ctIdx != null" >#{ctIdx,jdbcType=BIGINT},</if>
+<if test="ctState != null" >#{ctState,jdbcType=TINYINT},</if>
+<if test="ctCreateDate != null" >#{ctCreateDate,jdbcType=TIMESTAMP},</if>
+<if test="ctUpdateDate != null" >#{ctUpdateDate,jdbcType=TIMESTAMP},</if>
+<if test="ctDeleteDate != null" >#{ctDeleteDate,jdbcType=TIMESTAMP},</if>
+<if test="ctNameKr != null" >#{ctNameKr,jdbcType=VARCHAR},</if>
+<if test="ctNameEn != null" >#{ctNameEn,jdbcType=VARCHAR},</if>
+<if test="ctCountry != null" >#{ctCountry,jdbcType=VARCHAR},</if>
+<if test="ctLikeCount != null" >#{ctLikeCount,jdbcType=BIGINT},</if>
+</trim>
+</insert>
+
+<update id="update" parameterType="CityInfoVO" >
+update z_city_info
+<set >
+<if test="ctState != null" >ct_state = #{ctState,jdbcType=TINYINT},</if>
+<if test="ctCreateDate != null" >ct_create_date = #{ctCreateDate,jdbcType=TIMESTAMP},</if>
+<if test="ctUpdateDate != null" >ct_update_date = #{ctUpdateDate,jdbcType=TIMESTAMP},</if>
+<if test="ctDeleteDate != null" >ct_delete_date = #{ctDeleteDate,jdbcType=TIMESTAMP},</if>
+<if test="ctNameKr != null" >ct_name_kr = #{ctNameKr,jdbcType=VARCHAR},</if>
+<if test="ctNameEn != null" >ct_name_en = #{ctNameEn,jdbcType=VARCHAR},</if>
+<if test="ctCountry != null" >ct_country = #{ctCountry,jdbcType=VARCHAR},</if>
+<if test="ctLikeCount != null" >ct_like_count = #{ctLikeCount,jdbcType=BIGINT},</if>
+</set>
+where ct_idx = #{ctIdx,jdbcType=BIGINT}
+</update>
+
+</mapper>
