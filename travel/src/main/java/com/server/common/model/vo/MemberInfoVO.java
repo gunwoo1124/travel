@@ -7,4 +7,5 @@ public class MemberInfoVO
 {
     private Long mbIdx;
     private String mbId;
+
 }

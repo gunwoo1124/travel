@@ -8,12 +8,12 @@
 		<version>2.5.14</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.numbers</groupId>
-	<artifactId>artubenftmarket</artifactId>
+	<groupId>com.interpark</groupId>
+	<artifactId>travel</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>manager</name>
-	<description>Wallet project for Spring Boot</description>
+	<name>apiServer</name>
+	<description>travel apiserver project for Spring Boot</description>
 
 	<properties>
 		<java.version>18</java.version>
@@ -159,26 +159,26 @@
 
 
 		<!-- tiles start -->
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-core</artifactId>
-			<version>3.0.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-servlet</artifactId>
-			<version>3.0.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-jsp</artifactId>
-			<version>3.0.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-el</artifactId>
-			<version>3.0.8</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tiles</groupId>-->
+<!--			<artifactId>tiles-core</artifactId>-->
+<!--			<version>3.0.8</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tiles</groupId>-->
+<!--			<artifactId>tiles-servlet</artifactId>-->
+<!--			<version>3.0.8</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tiles</groupId>-->
+<!--			<artifactId>tiles-jsp</artifactId>-->
+<!--			<version>3.0.8</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tiles</groupId>-->
+<!--			<artifactId>tiles-el</artifactId>-->
+<!--			<version>3.0.8</version>-->
+<!--		</dependency>-->
 		<!-- tiles end -->
 
 
@@ -242,32 +242,32 @@
 
 		<!-- jackson start -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.13.3</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.fasterxml.jackson.core</groupId>-->
+<!--			<artifactId>jackson-databind</artifactId>-->
+<!--			<version>2.13.3</version>-->
+<!--		</dependency>-->
 
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.13.3</version>
-		</dependency>
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>com.fasterxml.jackson.core</groupId>-->
+<!--			<artifactId>jackson-core</artifactId>-->
+<!--			<version>2.13.3</version>-->
+<!--		</dependency>-->
 
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.13.3</version>
-		</dependency>
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>com.fasterxml.jackson.core</groupId>-->
+<!--			<artifactId>jackson-annotations</artifactId>-->
+<!--			<version>2.13.3</version>-->
+<!--		</dependency>-->
 
 		<!-- https://mvnrepository.com/artifact/io.lettuce/lettuce-core -->
-		<dependency>
-			<groupId>io.lettuce</groupId>
-			<artifactId>lettuce-core</artifactId>
-			<version>6.1.8.RELEASE</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>io.lettuce</groupId>-->
+<!--			<artifactId>lettuce-core</artifactId>-->
+<!--			<version>6.1.8.RELEASE</version>-->
+<!--		</dependency>-->
 		<!-- jackson end -->
 
 
@@ -288,26 +288,26 @@
 
 
 		<!-- web3j start -->
-		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
-		<dependency>
-			<groupId>org.bouncycastle</groupId>
-			<artifactId>bcprov-jdk15on</artifactId>
-			<version>1.70</version>
-		</dependency>
-		<!--web3j for erc20-->
-		<dependency>
-			<groupId>org.web3j</groupId>
-			<artifactId>core</artifactId>
-			<version>${web3j.version}</version>
-		</dependency>
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.bouncycastle</groupId>-->
+<!--			<artifactId>bcprov-jdk15on</artifactId>-->
+<!--			<version>1.70</version>-->
+<!--		</dependency>-->
+<!--		&lt;!&ndash;web3j for erc20&ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.web3j</groupId>-->
+<!--			<artifactId>core</artifactId>-->
+<!--			<version>${web3j.version}</version>-->
+<!--		</dependency>-->
 		<!-- web3j end -->
 
 		<!--klaytn-->
-		<dependency>
-			<groupId>com.klaytn.caver</groupId>
-			<artifactId>core</artifactId>
-			<version>1.6.3</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.klaytn.caver</groupId>-->
+<!--			<artifactId>core</artifactId>-->
+<!--			<version>1.6.3</version>-->
+<!--		</dependency>-->
 
 
 
@@ -317,11 +317,11 @@
 
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>2.7.1</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.data</groupId>-->
+<!--			<artifactId>spring-data-redis</artifactId>-->
+<!--			<version>2.7.1</version>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -336,18 +336,18 @@
 		</dependency>
 
 		<!--qr code-->
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>3.5.0</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.google.zxing</groupId>-->
+<!--			<artifactId>javase</artifactId>-->
+<!--			<version>3.5.0</version>-->
+<!--		</dependency>-->
 
-		<!--google otp-->
-		<dependency>
-			<groupId>de.taimos</groupId>
-			<artifactId>totp</artifactId>
-			<version>1.0</version>
-		</dependency>
+<!--		&lt;!&ndash;google otp&ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>de.taimos</groupId>-->
+<!--			<artifactId>totp</artifactId>-->
+<!--			<version>1.0</version>-->
+<!--		</dependency>-->
 
 	</dependencies>
 
