@@ -9,6 +9,9 @@ import java.util.Map;
 
 public interface MemberService extends GenericServiceForBigInt<MemberInfoVO>
 {
+
+    int STATE_NONE = 0;
+    int STATE_DELETE = 1;
     PagingData selectPagingBySearch(Map<String, Object> parameter);
 
     ResUserInfo userRegister(String id);

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -62,24 +63,26 @@ public class MemberServiceImpl implements MemberService
         ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
         try
         {
-
-            MemberInfoVO entity = new MemberInfoVO();
-            entity.setMbId(id);
-            if(memberInfoDao.insert(entity))
-                returnCode = ReturnCode.SUCCESS;
-
-            /*
-            MemberInfoVO memberInfoVO = selectById(id);
-            if(memberInfoVO != null)
-                returnCode = ReturnCode.ACCOUNT_ALREADY_EXISTS;
+            if(!StringUtils.hasText(id) && id.equals(""))
+                returnCode = ReturnCode.ID_ERROR;
             else
             {
-                MemberInfoVO entity = new MemberInfoVO();
-                entity.setMbId(id);
-                if(memberInfoDao.insert(entity))
-                    returnCode = ReturnCode.SUCCESS;
+                Map<String, Object> parameter = new HashMap<>();
+                parameter.put("mbId", id);
+                parameter.put("mbState", MemberService.STATE_NONE);
+
+                List<MemberInfoVO> dataList = selectBySearch(parameter);
+
+                if(dataList.size() != 0)
+                    returnCode = ReturnCode.ID_ALREADY_EXISTS;
+                else
+                {
+                    MemberInfoVO entity = new MemberInfoVO();
+                    entity.setMbId(id);
+                    if(memberInfoDao.insert(entity))
+                        returnCode = ReturnCode.SUCCESS;
+                }
             }
-            */
 
         }
         catch (Exception e)
