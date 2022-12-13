@@ -96,7 +96,5 @@ public class CityInfoServiceImpl implements CityInfoService {
         response.setDescription(response.getReturnCode().getMessage());
         return response;
     }
-    
-
 
 }
