@@ -30,6 +30,12 @@ spring:
 server:
   port: 9091
 
+  mybatis:
+
+    # mapper.xml 파일이 위치할 패키지 경로를 입력
+    mapper-location: classpath*:com/server/common/dao/mybatis/mapper/*.xml
+
+
 ---
 #spring:
 #  config:

@@ -7,6 +7,7 @@ import com.server.common.model.ReturnCode;
 import com.server.common.model.request.ReqCityInfo;
 import com.server.common.model.response.ResCityInfo;
 import com.server.common.model.vo.CityInfoVOForApi;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,6 +70,7 @@ public class CityRegisterTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.country").value(resCityInfo.getData().getCountry()))
                 .andDo(MockMvcResultHandlers.print());
     }
+
 
     private ReqCityInfo registerRequest() {
         ReqCityInfo reqCityInfo = new ReqCityInfo();

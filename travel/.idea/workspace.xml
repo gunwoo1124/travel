@@ -61,7 +61,23 @@
       <recent name="com.gunwoo.common.converter" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CityRegisterTest">
+  <component name="RunManager" selected="JUnit.CityInfoServiceTest.createTest">
+    <configuration name="CityInfoServiceTest.createTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="travel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.server.city.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.server.city" />
+      <option name="MAIN_CLASS_NAME" value="com.server.city.CityInfoServiceTest" />
+      <option name="METHOD_NAME" value="createTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CityRegisterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="travel" />
       <extension name="coverage">
@@ -72,21 +88,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.server.city" />
       <option name="MAIN_CLASS_NAME" value="com.server.city.CityRegisterTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ccityRegisterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="travel" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.server.city.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.server.city" />
-      <option name="MAIN_CLASS_NAME" value="com.server.city.ccityRegisterTest" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -127,15 +129,15 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.CityInfoServiceTest.createTest" />
       <item itemvalue="JUnit.CityRegisterTest" />
-      <item itemvalue="JUnit.ccityRegisterTest" />
       <item itemvalue="Maven.travel [mybatis-generator:generate,-X]" />
       <item itemvalue="Spring Boot.DevApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CityInfoServiceTest.createTest" />
         <item itemvalue="JUnit.CityRegisterTest" />
-        <item itemvalue="JUnit.ccityRegisterTest" />
       </list>
     </recent_temporary>
   </component>
@@ -155,7 +157,7 @@
       <workItem from="1670933063000" duration="1308000" />
       <workItem from="1670934398533" duration="131000" />
       <workItem from="1670934546414" duration="33000" />
-      <workItem from="1670934696429" duration="5515000" />
+      <workItem from="1670934696429" duration="12677000" />
     </task>
     <servers />
   </component>
@@ -169,6 +171,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/server/common/service/Impl/CityInfoServiceImpl.java</url>
           <line>54</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/server/city/CityInfoServiceTest.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/server/common/service/Impl/MemberServiceImpl.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
