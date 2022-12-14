@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.server.common.dao.MemberTripDao" >
+<resultMap id="BaseResultMap" type="MemberTripVO" >
+<id column="mt_idx" property="mtIdx" jdbcType="BIGINT" />
+<result column="mt_ct_idx" property="mtCtIdx" jdbcType="BIGINT" />
+<result column="mt_mb_idx" property="mtMbIdx" jdbcType="BIGINT" />
+<result column="mt_state" property="mtState" jdbcType="TINYINT" />
+<result column="mt_create_date" property="mtCreateDate" jdbcType="TIMESTAMP" />
+<result column="mt_name" property="mtName" jdbcType="VARCHAR" />
+<result column="mt_description" property="mtDescription" jdbcType="VARCHAR" />
+<result column="mt_update_date" property="mtUpdateDate" jdbcType="TIMESTAMP" />
+<result column="mt_delete_date" property="mtDeleteDate" jdbcType="TIMESTAMP" />
+<result column="mt_start_date" property="mtStartDate" jdbcType="TIMESTAMP" />
+<result column="mt_end_date" property="mtEndDate" jdbcType="TIMESTAMP" />
+</resultMap>
+
+<resultMap id="ApiResultMap" type="MemberTripVOForApi" >
+<result column="mt_idx" property="tripIndex" jdbcType="BIGINT" />
+<result column="mt_ct_idx" property="cityIndex" jdbcType="BIGINT" />
+<result column="mt_mb_idx" property="memberIndex" jdbcType="BIGINT" />
+<result column="mt_state" property="state" jdbcType="TINYINT" />
+<result column="mt_create_date" property="createDate" jdbcType="TIMESTAMP" />
+<result column="mt_name" property="name" jdbcType="VARCHAR" />
+<result column="mt_description" property="description" jdbcType="VARCHAR" />
+<result column="mt_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+<result column="mt_delete_date" property="deleteDate" jdbcType="TIMESTAMP" />
+<result column="mt_start_date" property="startDate" jdbcType="TIMESTAMP" />
+<result column="mt_end_date" property="endDate" jdbcType="TIMESTAMP" />
+
+<result column="mb_id" property="memberId" jdbcType="VARCHAR" />
+
+<result column="ct_name_kr" property="cityNameKr" jdbcType="VARCHAR" />
+<result column="ct_name_en" property="cityNameEng" jdbcType="VARCHAR" />
+<result column="ct_country_en" property="country" jdbcType="VARCHAR" />
+</resultMap>
+
+<sql id="Base_Column_List" >*</sql>
+<sql id="Api_Column_List" >mt.*, ct.*, mb.*</sql>
+
+<sql id="JoinTableFrom" >FROM z_member_trip mt LEFT OUTER JOIN z_city_info ct ON mt.mt_ct_idx = ct.ct_idx LEFT OUTER JOIN z_member_info mb ON mt.mt_mb_idx = mb.mb_idx</sql>
+
+
+<sql id="BaseSearchQuery">
+<trim suffixOverrides="AND">
+<if test="queryColumn != null and search != ''">
+<if test="queryColumn == 'all'">
+(
+LOWER (ct_name_kr) = LOWER (#{search}) OR LOWER (ct_name_en) LIKE CONCAT(LOWER (#{search}), '%')
+) AND
+</if>
+</if>
+<if test="mtIdx != null">mt_idx = #{mtIdx} AND</if>
+<if test="ctIdx != null">ct_idx = #{ctIdx} AND</if>
+<if test="mbIdx!= null">mb_idx = #{mbIdx} AND</if>
+<if test="mtState!= null">mt_state = #{mtState} AND</if>
+<if test="mtName!= null">mt_name = #{mtName} AND</if>
+
+<if test="ctNameKr!= null">ct_name_kr = #{ctNameKr} AND</if>
+<if test="ctNameEn!= null">ct_name_en = #{ctNameEn} AND</if>
+<if test="ctCountryEn!= null">ct_country_en = #{ctCountryEn} AND</if>
+<if test="mbId!= null">mb_id = #{mbId} AND</if>
+
+<if test="searchStartDateOver != null and searchStartDateOver != ''">mt_start_date >= #{searchStartDateOver} AND</if>
+<if test="searchStartDateUnder != null and searchStartDateUnder != ''">#{searchStartDateUnder} >= mt_start_date AND</if>
+
+<if test="searchEndDateOver != null and searchEndDateOver != ''">mt_end_date >= #{searchEndDateOver} AND</if>
+<if test="searchEndDateUnder != null and searchEndDateUnder != ''">#{searchEndDateUnder} >= mt_end_date AND</if>
+
+</trim>
+</sql>
+
+
+<sql id="JoinDetailSearchQuery">
+<trim suffixOverrides="AND">
+<if test="queryColumn != null and search != ''">
+<if test="queryColumn == 'all'">
+(
+mb_email = #{search}
+OR mb_erc20_address = LOWER(#{search})
+) AND
+</if>
+</if>
+<if test="mbIdx != null">mb_idx = #{mbIdx} AND</if>
+<if test="mbId != null">mb_id = #{mbId} AND</if>
+<if test="mbEmail != null">mb_email = #{mbEmail} AND</if>
+<if test="mbState != null and mbState != ''">mb_state = #{mbState} AND</if>
+<if test="mbErc20Address != null">mb_erc20_address = LOWER(#{mbErc20Address}) AND</if>
+
+
+<if test="searchStartDate != null and searchStartDate != ''">md_create_date >= #{searchStartDate} AND</if>
+<if test="searchEndDate != null and searchEndDate != ''">#{searchEndDate} >= md_create_date AND</if>
+</trim>
+</sql>
+
+<select id="selectForApi" resultMap="ApiResultMap">SELECT <include refid="Api_Column_List"/><include refid="JoinTableFrom"/>WHERE mt_idx = #{idx} </select>
+<select id="selectBySearchForApi" parameterType="hashmap" resultMap="ApiResultMap">SELECT <include refid="Api_Column_List"/> <include refid="JoinTableFrom"/><where> <include refid="BaseSearchQuery"/> </where> <if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if> <if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if> <if test="limit != null">LIMIT #{limit}</if> </select>
+<select id="selectByIndex" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_trip WHERE mt_idx = #{idx} </select>
+<select id="selectBySearch" parameterType="hashmap" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/>FROM z_member_trip<where><include refid="BaseSearchQuery"/></where><if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if><if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if><if test="limit != null">LIMIT #{limit}</if></select>
+<select id="selectAll" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_trip <if test="orderColumn != null"> Order by ${orderColumn} ${order} </if> <if test="limit != null"> LIMIT #{limit} </if> </select>
+<select id="countBySearch" parameterType="hashmap" resultType="Integer">SELECT COUNT(*) FROM z_member_trip <where> <include refid="BaseSearchQuery"/> </where> </select>
+<select id="countAll" resultType="Integer">SELECT COUNT(*) FROM z_member_trip </select>
+<delete id="deleteByIndex" parameterType="Integer">DELETE FROM z_member_trip WHERE mt_idx = #{idx}</delete>
+
+
+<insert id="insert" parameterType="MemberTripVO" >
+insert into z_member_trip
+<trim prefix="(" suffix=")" suffixOverrides="," >
+<if test="mtIdx != null" >mt_idx,</if>
+<if test="mtCtIdx != null" >mt_ct_idx,</if>
+<if test="mtMbIdx != null" >mt_mb_idx,</if>
+<if test="mtState != null" >mt_state,</if>
+<if test="mtCreateDate != null" >mt_create_date,</if>
+<if test="mtName != null" >mt_name,</if>
+<if test="mtDescription != null" >mt_description,</if>
+<if test="mtUpdateDate != null" >mt_update_date,</if>
+<if test="mtDeleteDate != null" >mt_delete_date,</if>
+<if test="mtStartDate != null" >mt_start_date,</if>
+<if test="mtEndDate != null" >mt_end_date,</if>
+</trim>
+<trim prefix="values (" suffix=")" suffixOverrides="," >
+<if test="mtIdx != null" >#{mtIdx,jdbcType=BIGINT},</if>
+<if test="mtCtIdx != null" >#{mtCtIdx,jdbcType=BIGINT},</if>
+<if test="mtMbIdx != null" >#{mtMbIdx,jdbcType=BIGINT},</if>
+<if test="mtState != null" >#{mtState,jdbcType=TINYINT},</if>
+<if test="mtCreateDate != null" >#{mtCreateDate,jdbcType=TIMESTAMP},</if>
+<if test="mtName != null" >#{mtName,jdbcType=VARCHAR},</if>
+<if test="mtDescription != null" >#{mtDescription,jdbcType=VARCHAR},</if>
+<if test="mtUpdateDate != null" >#{mtUpdateDate,jdbcType=TIMESTAMP},</if>
+<if test="mtDeleteDate != null" >#{mtDeleteDate,jdbcType=TIMESTAMP},</if>
+<if test="mtStartDate != null" >#{mtStartDate,jdbcType=TIMESTAMP},</if>
+<if test="mtEndDate != null" >#{mtEndDate,jdbcType=TIMESTAMP},</if>
+</trim>
+</insert>
+
+<update id="update" parameterType="MemberTripVO" >
+update z_member_trip
+<set >
+<if test="mtCtIdx != null" >mt_ct_idx = #{mtCtIdx,jdbcType=BIGINT},</if>
+<if test="mtMbIdx != null" >mt_mb_idx = #{mtMbIdx,jdbcType=BIGINT},</if>
+<if test="mtState != null" >mt_state = #{mtState,jdbcType=TINYINT},</if>
+<if test="mtCreateDate != null" >mt_create_date = #{mtCreateDate,jdbcType=TIMESTAMP},</if>
+<if test="mtName != null" >mt_name = #{mtName,jdbcType=VARCHAR},</if>
+<if test="mtDescription != null" >mt_description = #{mtDescription,jdbcType=VARCHAR},</if>
+<if test="mtUpdateDate != null" >mt_update_date = #{mtUpdateDate,jdbcType=TIMESTAMP},</if>
+<if test="mtDeleteDate != null" >mt_delete_date = #{mtDeleteDate,jdbcType=TIMESTAMP},</if>
+<if test="mtStartDate != null" >mt_start_date = #{mtStartDate,jdbcType=TIMESTAMP},</if>
+<if test="mtEndDate != null" >mt_end_date = #{mtEndDate,jdbcType=TIMESTAMP},</if>
+</set>
+where mt_idx = #{mtIdx,jdbcType=BIGINT}
+</update>
+
+</mapper>
