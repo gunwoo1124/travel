@@ -37,31 +37,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/git/travel/travel&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;69266c67e75c946ef9b4144b0554326d&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/git/travel/travel/src/main/java/com/server/common/dao/mybatis/mapper",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "File.Encoding",
+    "spring.configuration.checksum": "69266c67e75c946ef9b4144b0554326d"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\git\travel\travel\src\main\java\com\server\common\dao\mybatis\mapper" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\git\travel\travel\src\main\java\com\server\common\dao\mybatis\mapper" />
       <recent name="C:\git\travel\travel\src\main\java\com\server\common\model\vo" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.server.common.service" />
+      <recent name="com.server.common.model.vo" />
+      <recent name="com.server.common.service.Impl" />
+      <recent name="com.server.common.dao" />
       <recent name="com.gunwoo.common.converter" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CityInfoServiceTest.createTest">
+  <component name="RunManager" selected="Spring Boot.DevApplication">
     <configuration name="CityInfoServiceTest.createTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="travel" />
       <extension name="coverage">
@@ -157,7 +164,7 @@
       <workItem from="1670933063000" duration="1308000" />
       <workItem from="1670934398533" duration="131000" />
       <workItem from="1670934546414" duration="33000" />
-      <workItem from="1670934696429" duration="12677000" />
+      <workItem from="1670934696429" duration="17745000" />
     </task>
     <servers />
   </component>
@@ -169,7 +176,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/server/common/service/Impl/CityInfoServiceImpl.java</url>
-          <line>54</line>
+          <line>57</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

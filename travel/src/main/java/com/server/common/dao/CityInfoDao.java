@@ -11,6 +11,6 @@ import java.util.Map;
 @Mapper
 public interface CityInfoDao extends GenericDaoForBigInt<CityInfoVO> {
 
-    CityInfoVOForApi selectForApi(Integer cityIdx);
+    CityInfoVOForApi selectForApi(Long cityIdx);
     List<CityInfoVOForApi> selectBySearchForApi(Map<String, Object> parameter);
 }

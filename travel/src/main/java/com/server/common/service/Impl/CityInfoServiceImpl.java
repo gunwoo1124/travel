@@ -5,16 +5,18 @@ import com.gunwoo.common.util.CommonStaticUtil;
 import com.server.common.dao.CityInfoDao;
 import com.server.common.model.ReturnCode;
 import com.server.common.model.request.ReqCityInfo;
+import com.server.common.model.request.ReqCityModify;
 import com.server.common.model.response.ResCityInfo;
 import com.server.common.model.vo.CityInfoVO;
-import com.server.common.model.vo.MemberInfoVO;
+import com.server.common.model.vo.CityInfoVOForApi;
 import com.server.common.service.CityInfoService;
-import com.server.common.service.MemberService;
+import com.server.common.service.CommonQueryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class CityInfoServiceImpl implements CityInfoService {
 
     private final CityInfoDao cityInfoDao;
+    private final CommonQueryService commonQueryService;
 
     @Override public boolean insert(CityInfoVO entity) { return cityInfoDao.insert(entity); }
     @Override public boolean update(CityInfoVO entity) { return cityInfoDao.update(entity); }
@@ -96,5 +99,84 @@ public class CityInfoServiceImpl implements CityInfoService {
         response.setDescription(response.getReturnCode().getMessage());
         return response;
     }
+
+    @Override
+    public ResCityInfo cityModify(ReqCityModify req)
+    {
+        ResCityInfo response = new ResCityInfo();
+        ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
+        CityInfoVO cityInfoVO = cityInfoDao.selectByIndex(req.getCityIndex());
+
+        if(cityInfoVO == null)
+        {
+            returnCode = ReturnCode.NOT_EXIST_CITY;
+        }
+        else
+        {
+            if(req.getCityNameKr() != null)
+            {
+                if (req.getCityNameKr().equals(""))
+                {
+                    returnCode = ReturnCode.BLANK_ERROR;
+                    response.setReturnCode(returnCode);
+                    response.setDescription(response.getReturnCode().getMessage());
+                    return response;
+                }
+                else
+                {
+                    cityInfoVO.setCtNameKr(req.getCityNameKr());
+                }
+            }
+
+            if(req.getCityNameEng() != null)
+            {
+                if (req.getCityNameEng().equals(""))
+                {
+                    returnCode = ReturnCode.BLANK_ERROR;
+                    response.setReturnCode(returnCode);
+                    response.setDescription(response.getReturnCode().getMessage());
+                    return response;
+                }
+                else
+                {
+                    cityInfoVO.setCtNameEn(req.getCityNameEng());
+                }
+            }
+
+            if(req.getCountryEng() != null)
+            {
+                if (req.getCountryEng().equals(""))
+                {
+                    returnCode = ReturnCode.BLANK_ERROR;
+                    response.setReturnCode(returnCode);
+                    response.setDescription(response.getReturnCode().getMessage());
+                    return response;
+                }
+                else
+                {
+                    cityInfoVO.setCtCountryEn(req.getCountryEng());
+                }
+            }
+
+            Date now = commonQueryService.getDatabaseNow();
+            cityInfoVO.setCtUpdateDate(now);
+
+            if(cityInfoDao.update(cityInfoVO))
+            {
+                CityInfoVOForApi data = cityInfoDao.selectForApi(req.getCityIndex());
+                response.setData(data);
+                log.info("cityIndex : " + data.getCityIndex());
+                log.info("cityNameKr : " + data.getCityNameKr());
+                log.info("cityNameEng : " + data.getCityNameEng());
+                log.info("country : " + data.getCountry());
+                log.info("updateDate : " + data.getUpdateDate());
+                returnCode = ReturnCode.SUCCESS;
+            }
+        }
+        response.setReturnCode(returnCode);
+        response.setDescription(response.getReturnCode().getMessage());
+        return response;
+    }
+
 
 }
