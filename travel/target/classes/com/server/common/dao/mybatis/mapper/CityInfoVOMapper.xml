@@ -45,7 +45,6 @@ LOWER (ct_name_kr) = LOWER (#{search}) OR LOWER (ct_name_en) LIKE CONCAT(LOWER (
 <if test="ctLikeCount != null">ct_like_count = #{ctLikeCount} AND</if>
 <if test="searchStartDate != null and searchStartDate != ''">ct_create_date >= #{searchStartDate} AND</if>
 <if test="searchEndDate != null and searchEndDate != ''">#{searchEndDate} >= ct_create_date AND</if>
-
 </trim>
 </sql>
 

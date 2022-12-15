@@ -18,8 +18,17 @@ public enum ReturnCode
 	COUNTRY_ENG_ERROR			(205, "Country 영문 이름이 NULL 입니다."),
 	CITY_ALREADY_EXISTS			(206, "이미 존재하는 City 입니다."),
 	NOT_EXIST_CITY				(207, "존재하지 않는 City 입니다."),
+	NOT_EXIST_MEMBER			(208, "존재하지 않는 Member 입니다."),
 
 
+
+	CITY_INDEX_ERROR			(230, "City Index가 NULL 입니다."),
+	MEMBER_INDEX_ERROR			(231, "Member Index가 NULL 입니다."),
+	TRIP_NAME_ERROR				(232, "Trip Name이 NULL 입니다."),
+	TRIP_START_DATE_ERROR		(233, "Trip Start Date가 NULL 입니다."),
+	TRIP_END_DATE_ERROR			(233, "Trip End Date가 NULL 입니다."),
+	TRIP_ALREADY_EXISTS			(234, "이미 존재하는 Trip 입니다."),
+	TRIP_END_DATE_OVER			(234, "여행 종료일이 지났습니다."),
 
 
 
