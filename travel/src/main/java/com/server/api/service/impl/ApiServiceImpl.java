@@ -1,10 +1,7 @@
 package com.server.api.service.impl;
 
 import com.server.api.service.ApiService;
-import com.server.common.model.request.ReqCityInfo;
-import com.server.common.model.request.ReqCityModify;
-import com.server.common.model.request.ReqTripInfo;
-import com.server.common.model.request.ReqUserInfo;
+import com.server.common.model.request.*;
 import com.server.common.model.response.ResCityInfo;
 import com.server.common.model.response.ResTripInfo;
 import com.server.common.model.response.ResUserInfo;
@@ -27,6 +24,7 @@ public class ApiServiceImpl implements ApiService
     @Override public ResUserInfo userRegister(ReqUserInfo req) { return memberService.userRegister(req.getMemberId()); }
     @Override public ResCityInfo cityRegister(ReqCityInfo req) { return cityInfoService.cityRegister(req); }
     @Override public ResCityInfo cityModify(ReqCityModify req) { return cityInfoService.cityModify(req);}
-
     @Override public ResTripInfo tripRegister(ReqTripInfo req) { return memberTripService.tripRegister(req); }
+
+    @Override public ResTripInfo tripModify(ReqTripModify req) { return memberTripService.tripModify(req); }
 }

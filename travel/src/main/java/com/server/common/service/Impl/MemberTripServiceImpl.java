@@ -7,12 +7,10 @@ import com.server.common.dao.MemberInfoDao;
 import com.server.common.dao.MemberTripDao;
 import com.server.common.model.ReturnCode;
 import com.server.common.model.request.ReqTripInfo;
+import com.server.common.model.request.ReqTripModify;
 import com.server.common.model.response.ResCityInfo;
 import com.server.common.model.response.ResTripInfo;
-import com.server.common.model.vo.CityInfoVO;
-import com.server.common.model.vo.MemberInfoVO;
-import com.server.common.model.vo.MemberTripVO;
-import com.server.common.model.vo.MemberTripVOForApi;
+import com.server.common.model.vo.*;
 import com.server.common.service.CityInfoService;
 import com.server.common.service.CommonQueryService;
 import com.server.common.service.MemberTripService;
@@ -64,7 +62,6 @@ public class MemberTripServiceImpl implements MemberTripService {
         ResTripInfo response = new ResTripInfo();
         ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
 
-        Date now = commonQueryService.getDatabaseNow();
         try
         {
             if(req.getCityIndex() == null)
@@ -120,14 +117,19 @@ public class MemberTripServiceImpl implements MemberTripService {
                         }
                         else
                         {
-                            now = commonQueryService.getDatabaseNow();
+                            Date now = commonQueryService.getDatabaseNow();
 
                             Long nowTimestamp = now.getTime();
-                            Long endTimeStamp = endDate.getTime();
+                            Long endTimestamp = endDate.getTime();
+                            Long startTimeStamp = startDate.getTime();
 
-                            if(endTimeStamp < nowTimestamp)
+                            if(endTimestamp < nowTimestamp)
                             {
                                 returnCode = ReturnCode.TRIP_END_DATE_OVER;
+                            }
+                            else if(endTimestamp < startTimeStamp)
+                            {
+                                returnCode = ReturnCode.START_END_ERROR;
                             }
                             else
                             {
@@ -159,6 +161,166 @@ public class MemberTripServiceImpl implements MemberTripService {
             log.error(e.toString());
             e.printStackTrace();
         }
+        response.setReturnCode(returnCode);
+        response.setDescription(response.getReturnCode().getMessage());
+        return response;
+    }
+
+    @Override
+    public ResTripInfo tripModify(ReqTripModify req)
+    {
+
+        ResTripInfo response = new ResTripInfo();
+        ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
+        try
+        {
+            MemberTripVO memberTripVO = memberTripDao.selectByIndex(req.getTripIndex());
+            Date now = commonQueryService.getDatabaseNow();
+
+            if(memberTripVO == null)
+            {
+                returnCode = ReturnCode.NOT_EXIST_TRIP;
+            }
+            else
+            {
+                if(req.getTripName() != null)
+                {
+                    if(req.getTripName().equals(""))
+                    {
+                        returnCode = ReturnCode.BLANK_ERROR;
+                        response.setReturnCode(returnCode);
+                        response.setDescription(response.getReturnCode().getMessage());
+                        return response;
+                    }
+                    else
+                    {
+                        memberTripVO.setMtName(req.getTripName());
+                    }
+                }
+
+                if(req.getDescription() != null)
+                {
+                    if(req.getDescription().equals(""))
+                    {
+                        returnCode = ReturnCode.BLANK_ERROR;
+                        response.setReturnCode(returnCode);
+                        response.setDescription(response.getReturnCode().getMessage());
+                        return response;
+                    }
+                    else
+                    {
+                        memberTripVO.setMtDescription(req.getDescription());
+                    }
+                }
+
+                if(req.getStartDate() != null)
+                {
+                    if(req.getStartDate().equals(""))
+                    {
+                        returnCode = ReturnCode.BLANK_ERROR;
+                        response.setReturnCode(returnCode);
+                        response.setDescription(response.getReturnCode().getMessage());
+                        return response;
+                    }
+                    else
+                    {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date startDate = dateFormat.parse(req.getStartDate());
+                        memberTripVO.setMtStartDate(startDate);
+                    }
+                }
+
+                if(req.getStartDate() != null)
+                {
+                    if(req.getStartDate().equals(""))
+                    {
+                        returnCode = ReturnCode.BLANK_ERROR;
+                        response.setReturnCode(returnCode);
+                        response.setDescription(response.getReturnCode().getMessage());
+                        return response;
+                    }
+                    else
+                    {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date startDate = dateFormat.parse(req.getStartDate());
+                        memberTripVO.setMtStartDate(startDate);
+                    }
+                }
+
+                if(req.getEndDate() != null)
+                {
+                    if(req.getEndDate().equals(""))
+                    {
+                        returnCode = ReturnCode.BLANK_ERROR;
+                        response.setReturnCode(returnCode);
+                        response.setDescription(response.getReturnCode().getMessage());
+                        return response;
+                    }
+                    else
+                    {
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date endDate = dateFormat.parse(req.getEndDate());
+                        Date startDate = new Date();
+                        if(req.getStartDate() != null)
+                        {
+                            startDate = dateFormat.parse(req.getStartDate());
+                        }
+                        else
+                        {
+                            startDate = memberTripVO.getMtStartDate();
+                        }
+
+
+                        Long nowTimestamp = now.getTime();
+                        Long startTimestamp = startDate.getTime();
+                        Long endTimestamp = endDate.getTime();
+
+                        if(endTimestamp < nowTimestamp)
+                        {
+                            returnCode = ReturnCode.TRIP_END_DATE_OVER;
+                            response.setReturnCode(returnCode);
+                            response.setDescription(response.getReturnCode().getMessage());
+                            return response;
+                        }
+                        else if(endTimestamp < startTimestamp)
+                        {
+                            returnCode = ReturnCode.START_END_ERROR;
+                            response.setReturnCode(returnCode);
+                            response.setDescription(response.getReturnCode().getMessage());
+                            return response;
+                        }
+                        else
+                        {
+                            memberTripVO.setMtEndDate(endDate);
+                        }
+                    }
+                }
+
+                memberTripVO.setMtUpdateDate(now);
+
+                if(memberTripDao.update(memberTripVO))
+                {
+                    MemberTripVOForApi data = memberTripDao.selectForApi(req.getTripIndex());
+                    response.setData(data);
+
+                    log.info("tripIndex : " + data.getTripIndex());
+                    log.info("tripName : " + data.getName());
+                    log.info("description : " + data.getDescription());
+                    log.info("startDate : " + data.getStartDate());
+                    log.info("endDate : " + data.getEndDate());
+                    returnCode = ReturnCode.SUCCESS;
+                }
+
+
+            }
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+            e.printStackTrace();
+        }
+
         response.setReturnCode(returnCode);
         response.setDescription(response.getReturnCode().getMessage());
         return response;

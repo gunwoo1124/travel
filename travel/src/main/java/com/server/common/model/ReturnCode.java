@@ -29,6 +29,8 @@ public enum ReturnCode
 	TRIP_END_DATE_ERROR			(233, "Trip End Date가 NULL 입니다."),
 	TRIP_ALREADY_EXISTS			(234, "이미 존재하는 Trip 입니다."),
 	TRIP_END_DATE_OVER			(234, "여행 종료일이 지났습니다."),
+	NOT_EXIST_TRIP				(235, "존재하지 않는 Trip 입니다."),
+	START_END_ERROR				(236, "시작시간이 종료시간보다 뒤입니다."),
 
 
 

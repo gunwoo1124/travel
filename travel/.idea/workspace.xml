@@ -165,7 +165,7 @@
       <workItem from="1670934398533" duration="131000" />
       <workItem from="1670934546414" duration="33000" />
       <workItem from="1670934696429" duration="24182000" />
-      <workItem from="1671082429281" duration="9594000" />
+      <workItem from="1671082429281" duration="16897000" />
     </task>
     <servers />
   </component>
@@ -192,17 +192,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/server/common/service/Impl/MemberTripServiceImpl.java</url>
-          <line>124</line>
+          <line>121</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/server/common/service/Impl/MemberTripServiceImpl.java</url>
-          <line>122</line>
+          <line>119</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/server/common/service/Impl/MemberTripServiceImpl.java</url>
-          <line>97</line>
+          <line>94</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>

@@ -1,10 +1,7 @@
 package com.server.api.web;
 
 import com.server.api.service.ApiService;
-import com.server.common.model.request.ReqCityInfo;
-import com.server.common.model.request.ReqCityModify;
-import com.server.common.model.request.ReqTripInfo;
-import com.server.common.model.request.ReqUserInfo;
+import com.server.common.model.request.*;
 import com.server.common.model.response.ResCityInfo;
 import com.server.common.model.response.ResTripInfo;
 import com.server.common.model.response.ResUserInfo;
@@ -47,5 +44,9 @@ public class RESTApi
     //Trip 관련 API
     //여행 등록
     @RequestMapping(method = {RequestMethod.POST}, value = "/trip/register") public ResTripInfo tripRegister(@Valid @RequestBody ReqTripInfo req) { return apiService.tripRegister(req);}
+
+    //여행 수정
+    @RequestMapping(method = {RequestMethod.POST}, value = "/trip/modify") public ResTripInfo tripModify(@Valid @RequestBody ReqTripModify req) { return apiService.tripModify(req);}
+
 
 }
