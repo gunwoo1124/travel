@@ -48,5 +48,10 @@ public class RESTApi
     //여행 수정
     @RequestMapping(method = {RequestMethod.POST}, value = "/trip/modify") public ResTripInfo tripModify(@Valid @RequestBody ReqTripModify req) { return apiService.tripModify(req);}
 
+    //여행 삭제
+    @RequestMapping(method = {RequestMethod.POST}, value = "/trip/delete") public ResTripInfo tripDelete(@Valid @RequestBody ReqTripDelete req) { return apiService.tripDelete(req);}
 
 }
+
+
+

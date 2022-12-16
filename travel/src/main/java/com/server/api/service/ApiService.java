@@ -12,4 +12,6 @@ public interface ApiService
     ResCityInfo cityModify(ReqCityModify req);
     ResTripInfo tripRegister(ReqTripInfo req);
     ResTripInfo tripModify(ReqTripModify req);
+
+    ResTripInfo tripDelete(ReqTripDelete req);
 }

@@ -32,6 +32,8 @@ public enum ReturnCode
 	NOT_EXIST_TRIP				(235, "존재하지 않는 Trip 입니다."),
 	START_END_ERROR				(236, "시작시간이 종료시간보다 뒤입니다."),
 
+	TRIP_INDEX_ERROR			(237, "Trip Index가 NULL 입니다."),
+	NOT_SAME_MEMBER				(238, "작성자와 Member Index가 일치하지 않습니다."),
 
 
 

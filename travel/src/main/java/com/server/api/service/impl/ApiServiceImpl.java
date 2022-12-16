@@ -27,4 +27,6 @@ public class ApiServiceImpl implements ApiService
     @Override public ResTripInfo tripRegister(ReqTripInfo req) { return memberTripService.tripRegister(req); }
 
     @Override public ResTripInfo tripModify(ReqTripModify req) { return memberTripService.tripModify(req); }
+
+    @Override public ResTripInfo tripDelete(ReqTripDelete req) { return memberTripService.tripDelete(req); }
 }

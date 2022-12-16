@@ -6,6 +6,7 @@ import com.server.common.dao.CityInfoDao;
 import com.server.common.dao.MemberInfoDao;
 import com.server.common.dao.MemberTripDao;
 import com.server.common.model.ReturnCode;
+import com.server.common.model.request.ReqTripDelete;
 import com.server.common.model.request.ReqTripInfo;
 import com.server.common.model.request.ReqTripModify;
 import com.server.common.model.response.ResCityInfo;
@@ -174,6 +175,7 @@ public class MemberTripServiceImpl implements MemberTripService {
         ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
         try
         {
+
             MemberTripVO memberTripVO = memberTripDao.selectByIndex(req.getTripIndex());
             Date now = commonQueryService.getDatabaseNow();
 
@@ -325,6 +327,72 @@ public class MemberTripServiceImpl implements MemberTripService {
         response.setDescription(response.getReturnCode().getMessage());
         return response;
     }
+
+    @Override
+    public ResTripInfo tripDelete(ReqTripDelete req)
+    {
+        ResTripInfo response = new ResTripInfo();
+        ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
+        try {
+            if (req.getMemberIndex() == null )
+            {
+                returnCode = ReturnCode.MEMBER_INDEX_ERROR;
+            }
+            else if(req.getTripIndex() == null)
+            {
+                returnCode = ReturnCode.TRIP_INDEX_ERROR;
+            }
+            else
+            {
+                MemberInfoVO memberInfoVO = memberInfoDao.selectByIndex(req.getMemberIndex());
+                MemberTripVO memberTripVO = memberTripDao.selectByIndex(req.getTripIndex());
+                if(memberInfoVO == null)
+                {
+                    returnCode = ReturnCode.NOT_EXIST_MEMBER;
+                }
+                else if(memberTripVO == null)
+                {
+                    returnCode = ReturnCode.NOT_EXIST_TRIP;
+                }
+                else
+                {
+                    if(!memberInfoVO.getMbIdx().equals(memberTripVO.getMtMbIdx()))
+                    {
+                        returnCode = ReturnCode.NOT_SAME_MEMBER;
+                    }
+                    else
+                    {
+                        Date now = commonQueryService.getDatabaseNow();
+                        memberTripVO.setMtState(MemberTripService.STATE_DELETE);
+                        memberTripVO.setMtDeleteDate(now);
+
+                        if(memberTripDao.update(memberTripVO))
+                        {
+                            MemberTripVOForApi data = memberTripDao.selectForApi(req.getTripIndex());
+                            response.setData(data);
+
+                            log.info("tripState : " + data.getState());
+                            log.info("deleteDate : " + data.getDeleteDate());
+
+                            returnCode = ReturnCode.SUCCESS;
+                        }
+                    }
+                }
+
+            }
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+            e.printStackTrace();
+        }
+
+        response.setReturnCode(returnCode);
+        response.setDescription(response.getReturnCode().getMessage());
+        return response;
+    }
+
+
 
 
 }

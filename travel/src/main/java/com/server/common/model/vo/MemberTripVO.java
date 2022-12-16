@@ -15,7 +15,7 @@ public class MemberTripVO {
 
     private Long mtMbIdx;
 
-    private Boolean mtState;
+    private Integer mtState;
 
     @JsonSerialize(using = CustomDateTimeSerializer.class) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date mtCreateDate;
