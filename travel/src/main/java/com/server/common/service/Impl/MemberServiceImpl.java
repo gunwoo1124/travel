@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService
 
     private final MemberInfoDao memberInfoDao;
 
-    @Override public boolean insert(MemberInfoVO entity) { return false; }
+    @Override public boolean insert(MemberInfoVO entity) { return memberInfoDao.insert(entity); }
     @Override public boolean update(MemberInfoVO entity) { return memberInfoDao.update(entity); }
     @Override public boolean delete(Long index) { return memberInfoDao.deleteByIndex(index); }
     @Override public MemberInfoVO select(Long index) { return memberInfoDao.selectByIndex(index); }

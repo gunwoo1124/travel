@@ -20,7 +20,7 @@
         <sqlMapGenerator targetPackage="com._replace" targetProject="C:\git\travel\travel\src\main"/>
 
 
-        <table schema="travel" tableName="z_member_trip" domainObjectName="MemberTripVO"/>
+        <table schema="travel" tableName="z_member_log_action" domainObjectName="MemberLogActionVO"/>
 
     </context>
 
