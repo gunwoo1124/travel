@@ -3,14 +3,19 @@ package com.server.common.service.Impl;
 import com.gunwoo.common.paging.PagingData;
 import com.gunwoo.common.util.CommonStaticUtil;
 import com.server.common.dao.CityInfoDao;
+import com.server.common.dao.MemberTripDao;
 import com.server.common.model.ReturnCode;
+import com.server.common.model.request.ReqCityDelete;
 import com.server.common.model.request.ReqCityInfo;
 import com.server.common.model.request.ReqCityModify;
 import com.server.common.model.response.ResCityInfo;
 import com.server.common.model.vo.CityInfoVO;
 import com.server.common.model.vo.CityInfoVOForApi;
+import com.server.common.model.vo.MemberTripVO;
+import com.server.common.model.vo.MemberTripVOForApi;
 import com.server.common.service.CityInfoService;
 import com.server.common.service.CommonQueryService;
+import com.server.common.service.MemberTripService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,6 +32,7 @@ import java.util.Map;
 public class CityInfoServiceImpl implements CityInfoService {
 
     private final CityInfoDao cityInfoDao;
+    private final MemberTripDao memberTripDao;
     private final CommonQueryService commonQueryService;
 
     @Override public boolean insert(CityInfoVO entity) { return cityInfoDao.insert(entity); }
@@ -173,6 +179,69 @@ public class CityInfoServiceImpl implements CityInfoService {
                 returnCode = ReturnCode.SUCCESS;
             }
         }
+        response.setReturnCode(returnCode);
+        response.setDescription(response.getReturnCode().getMessage());
+        return response;
+    }
+
+    @Override
+    public ResCityInfo cityDelete(ReqCityDelete req)
+    {
+        ResCityInfo response = new ResCityInfo();
+        ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
+
+        try
+        {
+            if (req.getCityIndex() == null )
+            {
+                returnCode = ReturnCode.CITY_INDEX_ERROR;
+            }
+            else
+            {
+                CityInfoVO cityInfoVO = cityInfoDao.selectByIndex(req.getCityIndex());
+
+                if(cityInfoVO == null)
+                {
+                    returnCode = ReturnCode.NOT_EXIST_CITY;
+                }
+                else
+                {
+                    Map<String, Object> parameter = new HashMap<>();
+                    parameter.put("mtCtIdx", req.getCityIndex());
+                    parameter.put("mtState", MemberTripService.STATE_NONE);
+
+                    List<MemberTripVO> memberTripVOList = memberTripDao.selectBySearch(parameter);
+
+                    if(memberTripVOList.size() >0)
+                    {
+                        returnCode = ReturnCode.CITY_REGISTER_TRIP;
+                    }
+                    else
+                    {
+                        Date now = commonQueryService.getDatabaseNow();
+                        cityInfoVO.setCtState(CityInfoService.STATE_DELETE);
+                        cityInfoVO.setCtDeleteDate(now);
+
+                        if(cityInfoDao.update(cityInfoVO))
+                        {
+                            CityInfoVOForApi data = cityInfoDao.selectForApi(req.getCityIndex());
+                            response.setData(data);
+
+                            log.info("cityInfoState : " + data.getState());
+                            log.info("deleteDate : " + data.getDeleteDate());
+
+                            returnCode = ReturnCode.SUCCESS;
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+            e.printStackTrace();
+        }
+
         response.setReturnCode(returnCode);
         response.setDescription(response.getReturnCode().getMessage());
         return response;

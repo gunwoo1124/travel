@@ -39,7 +39,7 @@ public class RESTApi
     @RequestMapping(method = {RequestMethod.POST}, value = "/city/modify") public ResCityInfo cityInfoModify(@Valid @RequestBody ReqCityModify req) { return apiService.cityModify(req);}
 
     //도시 삭제
-    
+    @RequestMapping(method = {RequestMethod.POST}, value = "/city/delete") public ResCityInfo cityInfoDelete(@Valid @RequestBody ReqCityDelete req) { return apiService.cityDelete(req);}
 
 
 

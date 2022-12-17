@@ -11,7 +11,7 @@ import java.util.Date;
 public class CityInfoVO
 {
     private Long ctIdx;
-    private Boolean ctState;
+    private Integer ctState;
     @JsonSerialize(using = CustomDateTimeSerializer.class) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date ctCreateDate;
     @JsonSerialize(using = CustomDateTimeSerializer.class) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

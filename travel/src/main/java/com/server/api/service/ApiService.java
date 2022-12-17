@@ -10,11 +10,11 @@ public interface ApiService
     ResUserInfo userRegister(ReqUserInfo req);
     ResCityInfo cityRegister(ReqCityInfo req);
     ResCityInfo cityModify(ReqCityModify req);
+
+    ResCityInfo cityDelete(ReqCityDelete req);
     ResTripInfo tripRegister(ReqTripInfo req);
     ResTripInfo tripModify(ReqTripModify req);
-
     ResTripInfo tripDelete(ReqTripIndexWithMember req);
-
     ResTripInfo tripInfo(ReqTripIndexWithMember req);
 
 }

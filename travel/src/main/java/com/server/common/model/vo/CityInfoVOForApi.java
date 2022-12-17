@@ -12,7 +12,7 @@ public class CityInfoVOForApi
 {
 
     private Long cityIndex;
-    private Boolean state;
+    private Integer state;
     @JsonSerialize(using = CustomDateTimeSerializer.class) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     @JsonSerialize(using = CustomDateTimeSerializer.class) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
