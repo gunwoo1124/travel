@@ -13,5 +13,8 @@ public interface ApiService
     ResTripInfo tripRegister(ReqTripInfo req);
     ResTripInfo tripModify(ReqTripModify req);
 
-    ResTripInfo tripDelete(ReqTripDelete req);
+    ResTripInfo tripDelete(ReqTripIndexWithMember req);
+
+    ResTripInfo tripInfo(ReqTripIndexWithMember req);
+
 }

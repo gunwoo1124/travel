@@ -34,6 +34,7 @@ public enum ReturnCode
 
 	TRIP_INDEX_ERROR			(237, "Trip Index가 NULL 입니다."),
 	NOT_SAME_MEMBER				(238, "작성자와 Member Index가 일치하지 않습니다."),
+	ALREADY_DELETE_TRIP			(239, "삭제된 Trip 입니다."),
 
 
 

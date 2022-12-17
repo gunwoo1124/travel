@@ -3,7 +3,7 @@ package com.server.common.model.request;
 import lombok.Data;
 
 @Data
-public class ReqTripDelete
+public class ReqTripIndexWithMember
 {
     private Long tripIndex;
 

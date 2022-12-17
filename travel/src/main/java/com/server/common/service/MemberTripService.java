@@ -1,7 +1,7 @@
 package com.server.common.service;
 
 import com.gunwoo.common.generic.GenericServiceForBigInt;
-import com.server.common.model.request.ReqTripDelete;
+import com.server.common.model.request.ReqTripIndexWithMember;
 import com.server.common.model.request.ReqTripInfo;
 import com.server.common.model.request.ReqTripModify;
 import com.server.common.model.response.ResTripInfo;
@@ -18,7 +18,8 @@ public interface MemberTripService extends GenericServiceForBigInt<MemberTripVO>
     ResTripInfo tripRegister(ReqTripInfo req);
 
     ResTripInfo tripModify(ReqTripModify req);
-    ResTripInfo tripDelete(ReqTripDelete req);
+    ResTripInfo tripDelete(ReqTripIndexWithMember req);
+    ResTripInfo tripInfo(ReqTripIndexWithMember req);
 
 
 

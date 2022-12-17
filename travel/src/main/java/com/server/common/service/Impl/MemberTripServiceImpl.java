@@ -6,18 +6,15 @@ import com.server.common.dao.CityInfoDao;
 import com.server.common.dao.MemberInfoDao;
 import com.server.common.dao.MemberTripDao;
 import com.server.common.model.ReturnCode;
-import com.server.common.model.request.ReqTripDelete;
+import com.server.common.model.request.ReqTripIndexWithMember;
 import com.server.common.model.request.ReqTripInfo;
 import com.server.common.model.request.ReqTripModify;
-import com.server.common.model.response.ResCityInfo;
 import com.server.common.model.response.ResTripInfo;
 import com.server.common.model.vo.*;
-import com.server.common.service.CityInfoService;
 import com.server.common.service.CommonQueryService;
 import com.server.common.service.MemberTripService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -329,7 +326,7 @@ public class MemberTripServiceImpl implements MemberTripService {
     }
 
     @Override
-    public ResTripInfo tripDelete(ReqTripDelete req)
+    public ResTripInfo tripDelete(ReqTripIndexWithMember req)
     {
         ResTripInfo response = new ResTripInfo();
         ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
@@ -379,6 +376,60 @@ public class MemberTripServiceImpl implements MemberTripService {
                     }
                 }
 
+            }
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+            e.printStackTrace();
+        }
+
+        response.setReturnCode(returnCode);
+        response.setDescription(response.getReturnCode().getMessage());
+        return response;
+    }
+
+    @Override
+    public ResTripInfo tripInfo(ReqTripIndexWithMember req)
+    {
+
+        ResTripInfo response = new ResTripInfo();
+        ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
+        try
+        {
+            if (req.getMemberIndex() == null )
+            {
+                returnCode = ReturnCode.MEMBER_INDEX_ERROR;
+            }
+            else if(req.getTripIndex() == null)
+            {
+                returnCode = ReturnCode.TRIP_INDEX_ERROR;
+            }
+            else
+            {
+                MemberInfoVO memberInfoVO = memberInfoDao.selectByIndex(req.getMemberIndex());
+                MemberTripVO memberTripVO = memberTripDao.selectByIndex(req.getTripIndex());
+                if(memberInfoVO == null)
+                {
+                    returnCode = ReturnCode.NOT_EXIST_MEMBER;
+                }
+                else if(memberTripVO == null)
+                {
+                    returnCode = ReturnCode.NOT_EXIST_TRIP;
+                }
+                else
+                {
+                   if(memberTripVO.getMtState().equals(MemberTripService.STATE_DELETE))
+                       returnCode = ReturnCode.ALREADY_DELETE_TRIP;
+                   else
+                   {
+                       MemberTripVOForApi data = memberTripDao.selectForApi(req.getTripIndex());
+                       response.setData(data);
+
+                       returnCode = ReturnCode.SUCCESS;
+                   }
+
+                }
             }
         }
         catch (Exception e)

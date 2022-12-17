@@ -7,7 +7,6 @@ import com.server.common.model.response.ResTripInfo;
 import com.server.common.model.response.ResUserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,6 +38,9 @@ public class RESTApi
     //도시수정
     @RequestMapping(method = {RequestMethod.POST}, value = "/city/modify") public ResCityInfo cityInfoModify(@Valid @RequestBody ReqCityModify req) { return apiService.cityModify(req);}
 
+    //도시 삭제
+    
+
 
 
     //Trip 관련 API
@@ -49,7 +51,10 @@ public class RESTApi
     @RequestMapping(method = {RequestMethod.POST}, value = "/trip/modify") public ResTripInfo tripModify(@Valid @RequestBody ReqTripModify req) { return apiService.tripModify(req);}
 
     //여행 삭제
-    @RequestMapping(method = {RequestMethod.POST}, value = "/trip/delete") public ResTripInfo tripDelete(@Valid @RequestBody ReqTripDelete req) { return apiService.tripDelete(req);}
+    @RequestMapping(method = {RequestMethod.POST}, value = "/trip/delete") public ResTripInfo tripDelete(@Valid @RequestBody ReqTripIndexWithMember req) { return apiService.tripDelete(req);}
+
+    //단일 여행 조회
+    @RequestMapping(method = {RequestMethod.POST}, value = "/trip/info") public ResTripInfo tripInfo(@Valid @RequestBody ReqTripIndexWithMember req) { return apiService.tripInfo(req);}
 
 }
 
