@@ -41,6 +41,10 @@ public class RESTApi
     //도시 삭제
     @RequestMapping(method = {RequestMethod.POST}, value = "/city/delete") public ResCityInfo cityInfoDelete(@Valid @RequestBody ReqCityDelete req) { return apiService.cityDelete(req);}
 
+    //단일 도시 조회
+    @RequestMapping(method = {RequestMethod.POST}, value = "/city/info") public ResCityInfo tripInfo(@Valid @RequestBody ReqCityIndexWithMember req) { return apiService.cityInfo(req);}
+
+
 
 
     //Trip 관련 API

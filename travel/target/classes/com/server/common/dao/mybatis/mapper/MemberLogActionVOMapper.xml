@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.server.common.dao.MemberLogActionDao" >
+<resultMap id="BaseResultMap" type="MemberLogActionVO" >
+<id column="ma_idx" property="maIdx" jdbcType="BIGINT" />
+<result column="ma_state" property="maState" jdbcType="TINYINT" />
+<result column="ma_type" property="maType" jdbcType="TINYINT" />
+<result column="ma_create_date" property="maCreateDate" jdbcType="TIMESTAMP" />
+<result column="ma_mb_idx" property="maMbIdx" jdbcType="BIGINT" />
+<result column="ma_ct_idx" property="maCtIdx" jdbcType="BIGINT" />
+<result column="ma_mt_idx" property="maMtIdx" jdbcType="BIGINT" />
+</resultMap>
+
+<resultMap id="ApiResultMap" type="MemberLogActionVOForApi" >
+<result column="ma_idx" property="logIndex" jdbcType="BIGINT" />
+<result column="ma_state" property="state" jdbcType="TINYINT" />
+<result column="ma_type" property="type" jdbcType="TINYINT" />
+<result column="ma_create_date" property="createDate" jdbcType="TIMESTAMP" />
+<result column="ma_mb_idx" property="memberIndex" jdbcType="BIGINT" />
+<result column="ma_ct_idx" property="cityIndex" jdbcType="BIGINT" />
+<result column="ma_mt_idx" property="tripIndex" jdbcType="BIGINT" />
+</resultMap>
+
+<sql id="Base_Column_List" >*</sql>
+<sql id="Api_Column_List" >*</sql>
+
+<sql id="BaseSearchQuery">
+<trim suffixOverrides="AND">
+<if test="queryColumn != null and search != ''">
+<if test="queryColumn == 'all'">
+(
+(ma_idx) = #{search}
+) AND
+</if>
+</if>
+<if test="maIdx != null">ma_idx = #{maIdx} AND</if>
+<if test="maState != null">ma_state = #{maState} AND</if>
+<if test="maType!= null">ma_type = #{maType} AND</if>
+<if test="maMbIdx!= null">ma_mb_idx = #{maMbIdx} AND</if>
+<if test="maCtIdx!= null">ma_ct_idx = #{maCtIdx} AND</if>
+<if test="maMtIdx != null">ma_mt_idx = #{maMtIdx} AND</if>
+<if test="searchStartDate != null and searchStartDate != ''">ma_create_date >= #{searchStartDate} AND</if>
+<if test="searchEndDate != null and searchEndDate != ''">#{searchEndDate} >= ma_create_date AND</if>
+</trim>
+</sql>
+
+
+<select id="selectForApi" resultMap="ApiResultMap">SELECT <include refid="Api_Column_List"/>FROM z_member_log_action  WHERE ma_idx = #{idx} </select>
+<select id="selectBySearchForApi" parameterType="hashmap" resultMap="ApiResultMap">SELECT <include refid="Api_Column_List"/> FROM z_member_log_action <where> <include refid="BaseSearchQuery"/> </where> <if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if> <if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if> <if test="limit != null">LIMIT #{limit}</if> </select>
+<select id="selectByIndex" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_log_action WHERE ma_idx = #{idx} </select>
+<select id="selectBySearch" parameterType="hashmap" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/>FROM z_member_log_action<where><include refid="BaseSearchQuery"/></where><if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if><if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if><if test="limit != null">LIMIT #{limit}</if></select>
+<select id="selectAll" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_member_log_action <if test="orderColumn != null"> Order by ${orderColumn} ${order} </if> <if test="limit != null"> LIMIT #{limit} </if> </select>
+<select id="countBySearch" parameterType="hashmap" resultType="Integer">SELECT COUNT(*) FROM z_member_log_action <where> <include refid="BaseSearchQuery"/> </where> </select>
+<select id="countAll" resultType="Integer">SELECT COUNT(*) FROM z_member_log_action </select>
+<delete id="deleteByIndex" parameterType="Integer">DELETE FROM z_member_log_action WHERE ma_idx = #{idx}</delete>
+
+<insert id="insert" parameterType="MemberLogActionVO" >
+insert into z_member_log_action
+<trim prefix="(" suffix=")" suffixOverrides="," >
+<if test="maIdx != null" >ma_idx,</if>
+<if test="maState != null" >ma_state,</if>
+<if test="maType != null" >ma_type,</if>
+<if test="maCreateDate != null" >ma_create_date,</if>
+<if test="maMbIdx != null" >ma_mb_idx,</if>
+<if test="maCtIdx != null" >ma_ct_idx,</if>
+<if test="maMtIdx != null" >ma_mt_idx,</if>
+</trim>
+<trim prefix="values (" suffix=")" suffixOverrides="," >
+<if test="maIdx != null" >#{maIdx,jdbcType=BIGINT},</if>
+<if test="maState != null" >#{maState,jdbcType=TINYINT},</if>
+<if test="maType != null" >#{maType,jdbcType=TINYINT},</if>
+<if test="maCreateDate != null" >#{maCreateDate,jdbcType=TIMESTAMP},</if>
+<if test="maMbIdx != null" >#{maMbIdx,jdbcType=BIGINT},</if>
+<if test="maCtIdx != null" >#{maCtIdx,jdbcType=BIGINT},</if>
+<if test="maMtIdx != null" >#{maMtIdx,jdbcType=BIGINT},</if>
+</trim>
+</insert>
+
+<update id="update" parameterType="MemberLogActionVO" >
+update z_member_log_action
+<set >
+<if test="maState != null" >ma_state = #{maState,jdbcType=TINYINT},</if>
+<if test="maType != null" >ma_type = #{maType,jdbcType=TINYINT},</if>
+<if test="maCreateDate != null" >ma_create_date = #{maCreateDate,jdbcType=TIMESTAMP},</if>
+<if test="maMbIdx != null" >ma_mb_idx = #{maMbIdx,jdbcType=BIGINT},</if>
+<if test="maCtIdx != null" >ma_ct_idx = #{maCtIdx,jdbcType=BIGINT},</if>
+<if test="maMtIdx != null" >ma_mt_idx = #{maMtIdx,jdbcType=BIGINT},</if>
+</set>
+where ma_idx = #{maIdx,jdbcType=BIGINT}
+</update>
+
+</mapper>

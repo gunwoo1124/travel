@@ -3,24 +3,28 @@ package com.server.common.service.Impl;
 import com.gunwoo.common.paging.PagingData;
 import com.gunwoo.common.util.CommonStaticUtil;
 import com.server.common.dao.CityInfoDao;
+import com.server.common.dao.MemberInfoDao;
+import com.server.common.dao.MemberLogActionDao;
 import com.server.common.dao.MemberTripDao;
 import com.server.common.model.ReturnCode;
 import com.server.common.model.request.ReqCityDelete;
+import com.server.common.model.request.ReqCityIndexWithMember;
 import com.server.common.model.request.ReqCityInfo;
 import com.server.common.model.request.ReqCityModify;
 import com.server.common.model.response.ResCityInfo;
-import com.server.common.model.vo.CityInfoVO;
-import com.server.common.model.vo.CityInfoVOForApi;
-import com.server.common.model.vo.MemberTripVO;
-import com.server.common.model.vo.MemberTripVOForApi;
+import com.server.common.model.vo.*;
 import com.server.common.service.CityInfoService;
 import com.server.common.service.CommonQueryService;
+import com.server.common.service.MemberLogActionService;
 import com.server.common.service.MemberTripService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Member;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +36,8 @@ import java.util.Map;
 public class CityInfoServiceImpl implements CityInfoService {
 
     private final CityInfoDao cityInfoDao;
+    private final MemberInfoDao memberInfoDao;
+    private final MemberLogActionDao memberLogActionDao;
     private final MemberTripDao memberTripDao;
     private final CommonQueryService commonQueryService;
 
@@ -232,6 +238,60 @@ public class CityInfoServiceImpl implements CityInfoService {
 
                             returnCode = ReturnCode.SUCCESS;
                         }
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+            e.printStackTrace();
+        }
+
+        response.setReturnCode(returnCode);
+        response.setDescription(response.getReturnCode().getMessage());
+        return response;
+    }
+
+    @Override
+    public ResCityInfo cityInfo(ReqCityIndexWithMember req)
+    {
+        ResCityInfo response = new ResCityInfo();
+        ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
+        try
+        {
+            if (req.getMemberIndex() == null )
+            {
+                returnCode = ReturnCode.MEMBER_INDEX_ERROR;
+            }
+            else if(req.getCityIndex() == null)
+            {
+                returnCode = ReturnCode.CITY_INDEX_ERROR;
+            }
+            else
+            {
+                MemberInfoVO memberInfoVO = memberInfoDao.selectByIndex(req.getMemberIndex());
+                CityInfoVO cityInfoVO = cityInfoDao.selectByIndex(req.getCityIndex());
+                if(memberInfoVO == null)
+                {
+                    returnCode = ReturnCode.NOT_EXIST_MEMBER;
+                }
+                else if(cityInfoVO == null)
+                {
+                    returnCode = ReturnCode.NOT_EXIST_CITY;
+                }
+                else
+                {
+                    MemberLogActionVO forInsert = new MemberLogActionVO();
+                    forInsert.setMaType(MemberLogActionService.TYPE_SEARCH_CITY);
+                    forInsert.setMaMbIdx(memberInfoVO.getMbIdx());
+                    forInsert.setMaCtIdx(cityInfoVO.getCtIdx());
+
+                    if(memberLogActionDao.insert(forInsert))
+                    {
+                        CityInfoVOForApi data = cityInfoDao.selectForApi(req.getCityIndex());
+                        response.setData(data);
+                        returnCode = ReturnCode.SUCCESS;
                     }
                 }
             }

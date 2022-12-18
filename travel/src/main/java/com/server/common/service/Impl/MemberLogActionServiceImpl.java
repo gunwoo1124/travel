@@ -3,7 +3,6 @@ package com.server.common.service.Impl;
 import com.gunwoo.common.paging.PagingData;
 import com.gunwoo.common.util.CommonStaticUtil;
 import com.server.common.dao.MemberLogActionDao;
-import com.server.common.model.vo.MemberInfoVO;
 import com.server.common.model.vo.MemberLogActionVO;
 import com.server.common.service.MemberLogActionService;
 import lombok.RequiredArgsConstructor;

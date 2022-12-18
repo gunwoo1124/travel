@@ -19,13 +19,12 @@ public class ApiServiceImpl implements ApiService
 {
     private final MemberService memberService;
     private final CityInfoService cityInfoService;
-
     private final MemberTripService memberTripService;
     @Override public ResUserInfo userRegister(ReqUserInfo req) { return memberService.userRegister(req.getMemberId()); }
     @Override public ResCityInfo cityRegister(ReqCityInfo req) { return cityInfoService.cityRegister(req); }
     @Override public ResCityInfo cityModify(ReqCityModify req) { return cityInfoService.cityModify(req);}
-
     @Override public ResCityInfo cityDelete(ReqCityDelete req) { return cityInfoService.cityDelete(req); }
+    @Override public ResCityInfo cityInfo(ReqCityIndexWithMember req) { return cityInfoService.cityInfo(req);}
     @Override public ResTripInfo tripRegister(ReqTripInfo req) { return memberTripService.tripRegister(req); }
     @Override public ResTripInfo tripModify(ReqTripModify req) { return memberTripService.tripModify(req); }
     @Override public ResTripInfo tripDelete(ReqTripIndexWithMember req) { return memberTripService.tripDelete(req); }
