@@ -25,6 +25,33 @@
 <result column="ct_like_count" property="likeCount" jdbcType="BIGINT" />
 </resultMap>
 
+<resultMap id="JoinResultMap" type="CityInfoVOForApiJoin" >
+<result column="ct_idx" property="cityIndex" jdbcType="BIGINT" />
+<result column="ct_state" property="state" jdbcType="TINYINT" />
+<result column="ct_create_date" property="createDate" jdbcType="TIMESTAMP" />
+<result column="ct_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+<result column="ct_delete_date" property="deleteDate" jdbcType="TIMESTAMP" />
+<result column="ct_name_kr" property="cityNameKr" jdbcType="VARCHAR" />
+<result column="ct_name_en" property="cityNameEng" jdbcType="VARCHAR" />
+<result column="ct_country_en" property="country" jdbcType="VARCHAR" />
+<result column="ct_like_count" property="likeCount" jdbcType="BIGINT" />
+    <result column="mt_idx" property="tripIndex" jdbcType="BIGINT" />
+
+    <result column="mt_state" property="tripState" jdbcType="TINYINT" />
+    <result column="mt_create_date" property="tripCreateDate" jdbcType="TIMESTAMP" />
+    <result column="mt_name" property="tripName" jdbcType="VARCHAR" />
+    <result column="mt_start_date" property="tripStartDate" jdbcType="TIMESTAMP" />
+    <result column="mt_end_date" property="tripEndDate" jdbcType="TIMESTAMP" />
+    <result column="mt_flag_trip" property="flagTrip" jdbcType="TINYINT" />
+
+    <result column="ma_idx" property="logIndex" jdbcType="BIGINT" />
+    <result column="ma_type" property="logType" jdbcType="TINYINT" />
+    <result column="ma_create_date" property="logCreateDate" jdbcType="TIMESTAMP" />
+<!--<association property="memberLogActionVO" javaType="MemberLogActionVO" column="ma_idx" autoMapping="true" />-->
+<!--<association property="memberTripVO" javaType="MemberTripVO" column="mt_ct_idx" autoMapping="true" />-->
+
+</resultMap>
+
 <sql id="Base_Column_List" >*</sql>
 <sql id="Api_Column_List" >*</sql>
 
@@ -54,9 +81,16 @@ LOWER (ct_name_kr) = LOWER (#{search}) OR LOWER (ct_name_en) LIKE CONCAT(LOWER (
 <select id="selectByIndex" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_city_info WHERE ct_idx = #{idx} </select>
 <select id="selectBySearch" parameterType="hashmap" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/>FROM z_city_info<where><include refid="BaseSearchQuery"/></where><if test="orderColumn != null">ORDER BY ${orderColumn} ${order}</if><if test="startRow != null and rowCount != null">LIMIT #{startRow}, #{rowCount}</if><if test="limit != null">LIMIT #{limit}</if></select>
 <select id="selectAll" resultMap="BaseResultMap">SELECT <include refid="Base_Column_List"/> FROM z_city_info <if test="orderColumn != null"> Order by ${orderColumn} ${order} </if> <if test="limit != null"> LIMIT #{limit} </if> </select>
-<select id="countBySearch" parameterType="hashmap" resultType="Integer">SELECT COUNT(*) FROM z_city_info <where> <include refid="BaseSearchQuery"/> </where> </select>
-<select id="countAll" resultType="Integer">SELECT COUNT(*) FROM z_city_info </select>
-<delete id="deleteByIndex" parameterType="Integer">DELETE FROM z_city_info WHERE ct_idx = #{idx}</delete>
+<select id="countBySearch" parameterType="hashmap" resultType="Long">SELECT COUNT(*) FROM z_city_info <where> <include refid="BaseSearchQuery"/> </where> </select>
+<select id="countAll" resultType="Long">SELECT COUNT(*) FROM z_city_info </select>
+<delete id="deleteByIndex" parameterType="Long">DELETE FROM z_city_info WHERE ct_idx = #{idx}</delete>
+
+
+<select id="selectBySearchList" parameterType="hashmap" resultMap="JoinResultMap">
+SELECT * FROM z_city_info ct LEFT OUTER JOIN (SELECT * FROM (SELECT * FROM z_member_log_action where ma_mb_idx = ${memberIndex} order by ma_create_date DESC LIMIT 18446744073709551615) ma group by ma_ct_idx) ma  ON ct.ct_idx = ma.ma_ct_idx LEFT OUTER JOIN (  (Select * From z_member_trip where mt_flag_trip = ${mtFlag} and mt_state = ${mtState} and mt_mb_idx = ${memberIndex}) UNION (Select * From (SELECT * FROM z_member_trip where mt_state = ${mtState} order by mt_flag_trip DESC LIMIT 18446744073709551615) mt group by mt_ct_idx)  ) mt ON ct.ct_idx = mt.mt_ct_idx ORDER BY ${orderColumn} ${order} , ${orderColumn2} ${order2} , case when (mt_create_timestamp >= ${oneDay}) then mt_create_date end DESC, case when (ma_create_timestamp >= ${oneWeek}) then ma_create_date end DESC, RAND() LIMIT #{limit} </select>
+<!--    SELECT ct.*,mt.* FROM z_city_info ct LEFT OUTER JOIN z_member_trip mt ON ct.ct_idx = mt.mt_ct_idx  where mt_flag_trip = ${mtFlag} and mt_state = ${mtState} and mt_mb_idx = ${memberIndex}  </select>-->
+<select id="countBySearchList" parameterType="hashmap" resultType="Long">SELECT COUNT(*) FROM z_city_info ct LEFT OUTER JOIN (SELECT * FROM (SELECT * FROM  z_member_trip  where mt_mb_idx = ${memberIndex} and mt_flag_trip = ${mtFlag} and mt_state = ${mtState}  order by mt_start_date DESC LIMIT 18446744073709551615 ) mt Group by mt_flag_trip, mt_ct_idx) mt ON ct.ct_idx = mt.mt_ct_idx  </select>
+<select id="selectBySearchListForCount" parameterType="hashmap" resultMap="JoinResultMap"> SELECT * FROM z_city_info ct LEFT OUTER JOIN (SELECT * FROM (SELECT * FROM  z_member_trip  where mt_mb_idx = ${memberIndex} and mt_flag_trip = ${mtFlag} and mt_state = ${mtState}  order by mt_start_date DESC LIMIT 18446744073709551615 ) mt Group by mt_flag_trip, mt_ct_idx) mt ON ct.ct_idx = mt.mt_ct_idx  </select>
 
 <insert id="insert" parameterType="CityInfoVO" >
 insert into z_city_info

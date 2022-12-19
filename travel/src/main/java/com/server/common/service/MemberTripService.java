@@ -11,9 +11,9 @@ public interface MemberTripService extends GenericServiceForBigInt<MemberTripVO>
 {
     int STATE_NONE = 0;
     int STATE_DELETE = 1;
-    int FLAG_NONE = 0;
-    int FLAG_ING = 1;
-    int FLAG_END = 2;
+    int FLAG_NONE = 1;
+    int FLAG_ING = 2;
+    int FLAG_END = 0;
 
     ResTripInfo tripRegister(ReqTripInfo req);
 
@@ -21,6 +21,7 @@ public interface MemberTripService extends GenericServiceForBigInt<MemberTripVO>
     ResTripInfo tripDelete(ReqTripIndexWithMember req);
     ResTripInfo tripInfo(ReqTripIndexWithMember req);
 
-
+    void processTrip();
+    void processTimestamp();
 
 }

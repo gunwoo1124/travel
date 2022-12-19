@@ -7,5 +7,7 @@ public interface MemberLogActionService extends GenericServiceForBigInt<MemberLo
 {
     int TYPE_SEARCH_CITY = 1;
 
+    void processTimestamp();
+
 
 }

@@ -2,6 +2,7 @@ package com.server.common.model.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.gunwoo.common.converter.CustomDateTimeSerializer;
+import com.mysql.cj.log.Log;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -37,4 +38,6 @@ public class MemberTripVO {
     private Date mtEndDate;
 
     private Integer mtFlagTrip;
+
+    private Long mtCreateTimestamp;
 }

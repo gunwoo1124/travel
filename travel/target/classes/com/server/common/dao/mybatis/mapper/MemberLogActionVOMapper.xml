@@ -9,6 +9,7 @@
 <result column="ma_mb_idx" property="maMbIdx" jdbcType="BIGINT" />
 <result column="ma_ct_idx" property="maCtIdx" jdbcType="BIGINT" />
 <result column="ma_mt_idx" property="maMtIdx" jdbcType="BIGINT" />
+    <result column="ma_create_timestamp" property="maCreateTimestamp" jdbcType="BIGINT" />
 </resultMap>
 
 <resultMap id="ApiResultMap" type="MemberLogActionVOForApi" >
@@ -39,6 +40,8 @@
 <if test="maMbIdx!= null">ma_mb_idx = #{maMbIdx} AND</if>
 <if test="maCtIdx!= null">ma_ct_idx = #{maCtIdx} AND</if>
 <if test="maMtIdx != null">ma_mt_idx = #{maMtIdx} AND</if>
+
+    <if test="maCreateTimestamp != null">ma_create_timestamp = #{maCreateTimestamp} AND</if>
 <if test="searchStartDate != null and searchStartDate != ''">ma_create_date >= #{searchStartDate} AND</if>
 <if test="searchEndDate != null and searchEndDate != ''">#{searchEndDate} >= ma_create_date AND</if>
 </trim>
@@ -64,6 +67,7 @@ insert into z_member_log_action
 <if test="maMbIdx != null" >ma_mb_idx,</if>
 <if test="maCtIdx != null" >ma_ct_idx,</if>
 <if test="maMtIdx != null" >ma_mt_idx,</if>
+    <if test="maCreateTimestamp != null" >ma_create_timestamp,</if>
 </trim>
 <trim prefix="values (" suffix=")" suffixOverrides="," >
 <if test="maIdx != null" >#{maIdx,jdbcType=BIGINT},</if>
@@ -73,6 +77,7 @@ insert into z_member_log_action
 <if test="maMbIdx != null" >#{maMbIdx,jdbcType=BIGINT},</if>
 <if test="maCtIdx != null" >#{maCtIdx,jdbcType=BIGINT},</if>
 <if test="maMtIdx != null" >#{maMtIdx,jdbcType=BIGINT},</if>
+    <if test="maCreateTimestamp != null" >#{maCreateTimestamp,jdbcType=BIGINT},</if>
 </trim>
 </insert>
 
@@ -85,6 +90,7 @@ update z_member_log_action
 <if test="maMbIdx != null" >ma_mb_idx = #{maMbIdx,jdbcType=BIGINT},</if>
 <if test="maCtIdx != null" >ma_ct_idx = #{maCtIdx,jdbcType=BIGINT},</if>
 <if test="maMtIdx != null" >ma_mt_idx = #{maMtIdx,jdbcType=BIGINT},</if>
+    <if test="maCreateTimestamp != null" >ma_create_timestamp = #{maCreateTimestamp,jdbcType=BIGINT},</if>
 </set>
 where ma_idx = #{maIdx,jdbcType=BIGINT}
 </update>

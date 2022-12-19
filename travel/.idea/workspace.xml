@@ -61,11 +61,11 @@
       <recent name="C:\git\travel\travel\src\main\java\com\server\common\dao\mybatis\mapper" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.server.api.web" />
+      <recent name="com.gunwoo.common.util" />
       <recent name="com.server.common.service" />
       <recent name="com.server.common.model.vo" />
       <recent name="com.server.common.service.Impl" />
-      <recent name="com.server.common.dao" />
-      <recent name="com.gunwoo.common.converter" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.DevApplication">
@@ -165,7 +165,9 @@
       <workItem from="1670934398533" duration="131000" />
       <workItem from="1670934546414" duration="33000" />
       <workItem from="1670934696429" duration="24182000" />
-      <workItem from="1671082429281" duration="40511000" />
+      <workItem from="1671082429281" duration="44298000" />
+      <workItem from="1671372123562" duration="14805000" />
+      <workItem from="1671408524739" duration="2748000" />
     </task>
     <servers />
   </component>
@@ -204,6 +206,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/server/common/service/Impl/MemberTripServiceImpl.java</url>
           <line>92</line>
           <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/server/common/service/Impl/CityInfoServiceImpl.java</url>
+          <line>372</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

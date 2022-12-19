@@ -4,11 +4,13 @@ import com.gunwoo.common.paging.PagingData;
 import com.gunwoo.common.util.CommonStaticUtil;
 import com.server.common.dao.MemberLogActionDao;
 import com.server.common.model.vo.MemberLogActionVO;
+import com.server.common.model.vo.MemberTripVO;
 import com.server.common.service.MemberLogActionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +39,25 @@ public class MemberLogActionServiceImpl implements MemberLogActionService
         pagingData.setObject(dataList);
         pagingData.setCurrentPageRowCount(dataList.size());
         return pagingData;
+    }
+
+    @Override
+    public void processTimestamp()
+    {
+        Map<String, Object> parameter = new HashMap<>();
+        parameter.put("maCreateTimestamp", -1);
+
+        List<MemberLogActionVO> list = memberLogActionDao.selectBySearch(parameter);
+
+        if(list.size()>0)
+        {
+            for(MemberLogActionVO memberLogActionVO : list)
+            {
+                memberLogActionVO.setMaCreateTimestamp(memberLogActionVO.getMaCreateDate().getTime());
+                memberLogActionDao.update(memberLogActionVO);
+            }
+        }
+
     }
 
 }

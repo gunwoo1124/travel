@@ -19,4 +19,6 @@ public class MemberLogActionVO {
     private Long maCtIdx;
     private Long maMtIdx;
 
+    private Long maCreateTimestamp;
+
 }

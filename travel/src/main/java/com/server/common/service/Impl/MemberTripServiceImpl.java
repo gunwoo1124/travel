@@ -443,6 +443,67 @@ public class MemberTripServiceImpl implements MemberTripService {
         return response;
     }
 
+    @Override
+    public void processTrip()
+    {
+        Map<String, Object> startDateMap = new HashMap<>();
+
+        Date now = commonQueryService.getDatabaseNow();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+        startDateMap.put("searchStartDateUnder",now);
+        startDateMap.put("mtFlagTrip",MemberTripService.FLAG_NONE);
+        startDateMap.put("mtState", MemberTripService.STATE_NONE);
+
+        List<MemberTripVO> startList = memberTripDao.selectBySearch(startDateMap);
+
+        if(startList.size()>0)
+        {
+            for(MemberTripVO memberTripVO : startList)
+            {
+                memberTripVO.setMtFlagTrip(MemberTripService.FLAG_ING);
+                memberTripDao.update(memberTripVO);
+            }
+        }
+
+        Map<String, Object> endDateMap = new HashMap<>();
+         endDateMap.put("searchEndDateUnder",now);
+        endDateMap.put("mtFlagTrip",MemberTripService.FLAG_ING);
+        endDateMap.put("mtState", MemberTripService.STATE_NONE);
+
+        List<MemberTripVO> endList = memberTripDao.selectBySearch(endDateMap);
+
+        if(endList.size()>0)
+        {
+           for(MemberTripVO memberTripVO : endList)
+           {
+                memberTripVO.setMtFlagTrip(MemberTripService.FLAG_END);
+               memberTripDao.update(memberTripVO);
+           }
+        }
+    }
+
+    @Override
+    public void processTimestamp()
+    {
+        Map<String, Object> parameter = new HashMap<>();
+        parameter.put("mtCreateTimestamp", -1);
+
+        List<MemberTripVO> list = memberTripDao.selectBySearch(parameter);
+
+        if(list.size()>0)
+        {
+            for(MemberTripVO memberTripVO : list)
+            {
+                memberTripVO.setMtCreateTimestamp(memberTripVO.getMtCreateDate().getTime());
+                memberTripDao.update(memberTripVO);
+            }
+        }
+
+    }
+
 
 
 

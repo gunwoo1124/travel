@@ -3,6 +3,7 @@ package com.server.api.web;
 import com.server.api.service.ApiService;
 import com.server.common.model.request.*;
 import com.server.common.model.response.ResCityInfo;
+import com.server.common.model.response.ResCityList;
 import com.server.common.model.response.ResTripInfo;
 import com.server.common.model.response.ResUserInfo;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,8 @@ public class RESTApi
     //단일 도시 조회
     @RequestMapping(method = {RequestMethod.POST}, value = "/city/info") public ResCityInfo tripInfo(@Valid @RequestBody ReqCityIndexWithMember req) { return apiService.cityInfo(req);}
 
+    //사용자별 도시 목록 조회
+    @RequestMapping(method = {RequestMethod.POST}, value = "/city/list") public ResCityList tripInfo(@Valid @RequestBody ReqMemberIndex req) { return apiService.cityList(req);}
 
 
 

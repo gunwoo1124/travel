@@ -1,17 +1,16 @@
 package com.server.common.service.Impl;
 
 import com.gunwoo.common.paging.PagingData;
+import com.gunwoo.common.util.CommonDateUtil;
 import com.gunwoo.common.util.CommonStaticUtil;
 import com.server.common.dao.CityInfoDao;
 import com.server.common.dao.MemberInfoDao;
 import com.server.common.dao.MemberLogActionDao;
 import com.server.common.dao.MemberTripDao;
 import com.server.common.model.ReturnCode;
-import com.server.common.model.request.ReqCityDelete;
-import com.server.common.model.request.ReqCityIndexWithMember;
-import com.server.common.model.request.ReqCityInfo;
-import com.server.common.model.request.ReqCityModify;
+import com.server.common.model.request.*;
 import com.server.common.model.response.ResCityInfo;
+import com.server.common.model.response.ResCityList;
 import com.server.common.model.vo.*;
 import com.server.common.service.CityInfoService;
 import com.server.common.service.CommonQueryService;
@@ -25,6 +24,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Member;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -295,6 +295,86 @@ public class CityInfoServiceImpl implements CityInfoService {
                     }
                 }
             }
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+            e.printStackTrace();
+        }
+
+        response.setReturnCode(returnCode);
+        response.setDescription(response.getReturnCode().getMessage());
+        return response;
+    }
+
+    @Override
+    public ResCityList cityList(ReqMemberIndex req)
+    {
+        ResCityList response = new ResCityList();
+        ReturnCode returnCode = ReturnCode.INTERNAL_ERROR;
+        try
+        {
+            Map<String, Object> parameter = new HashMap<>();
+            parameter.put("mtState", MemberTripService.STATE_NONE);
+            parameter.put("mtFlag", MemberTripService.FLAG_ING);
+            parameter.put("orderColumn","mt_flag_trip");
+            parameter.put("order", "DESC");
+            parameter.put("orderColumn2", "mt_start_date");
+            parameter.put("order2","ASC");
+            parameter.put("memberIndex", req.getMemberIndex());
+
+            Date now = commonQueryService.getDatabaseNow();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            String oneDay = CommonDateUtil.addDay(now, -1).toString();
+//            String oneWeek = CommonDateUtil.addDay(now, -7).toString();
+//            Date oneDayAgo = dateFormat.parse(oneDay);
+//            Date oneWeekAgo = dateFormat.parse(oneWeek);
+            Date oneDayAgo = CommonDateUtil.addDay(now, -1);
+            Date oneWeekAgo = CommonDateUtil.addDay(now, -7);
+
+//            Date oneDay = dateFormat.format(oneDayAgo);
+
+            parameter.put("oneDay", oneDayAgo.getTime());
+            parameter.put("oneWeek",oneWeekAgo.getTime());
+
+            Map<String, Object> limitParameter = new HashMap<>();
+            limitParameter.put("memberIndex", req.getMemberIndex());
+            limitParameter.put("mtFlag", MemberTripService.FLAG_ING);
+            limitParameter.put("mtState", MemberTripService.STATE_NONE);
+
+            //중복되는 City가 10개 이하..
+            if(cityInfoDao.countBySearchList(limitParameter) <= 10)
+            {
+                Map<String, Object> tripParameter = new HashMap<>();
+                tripParameter.put("mtMbIdx", req.getMemberIndex());
+                tripParameter.put("mtState", MemberTripService.STATE_NONE);
+                tripParameter.put("mtFlagTrip",MemberTripService.FLAG_ING);
+
+                parameter.put("limit", memberTripDao.countBySearch(tripParameter)+10);
+
+            }
+            //중복되는 City가 10개이상
+            else
+            {
+                List<CityInfoVOForApiJoin> list = cityInfoDao.selectBySearchListForCount(limitParameter);
+                CityInfoVOForApiJoin cityInfoVOForApiJoin =list.get(9);
+
+
+
+                Map<String, Object> tripParameter = new HashMap<>();
+                tripParameter.put("mtMbIdx", req.getMemberIndex());
+                tripParameter.put("mtState", MemberTripService.STATE_NONE);
+                tripParameter.put("mtFlagTrip",MemberTripService.FLAG_ING);
+               tripParameter.put("searchStartDateUnder" , cityInfoVOForApiJoin.getTripStartDate());
+
+                parameter.put("limit", memberTripDao.countBySearch(tripParameter)+10);
+            }
+
+            List<CityInfoVOForApiJoin> list = cityInfoDao.selectBySearchList(parameter);
+            response.setList(list);
+            returnCode = ReturnCode.SUCCESS;
+
+
         }
         catch (Exception e)
         {
