@@ -68,7 +68,7 @@
       <recent name="com.server.common.service.Impl" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.DevApplication">
+  <component name="RunManager" selected="Spring Boot.ProductApplication">
     <configuration name="CityInfoServiceTest.createTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="travel" />
       <extension name="coverage">
@@ -135,11 +135,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProductApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" value="production" />
+      <module name="travel" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.server.ServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="JUnit.CityInfoServiceTest.createTest" />
       <item itemvalue="JUnit.CityRegisterTest" />
       <item itemvalue="Maven.travel [mybatis-generator:generate,-X]" />
       <item itemvalue="Spring Boot.DevApplication" />
+      <item itemvalue="Spring Boot.ProductApplication" />
     </list>
     <recent_temporary>
       <list>
@@ -167,7 +176,7 @@
       <workItem from="1670934696429" duration="24182000" />
       <workItem from="1671082429281" duration="44298000" />
       <workItem from="1671372123562" duration="14805000" />
-      <workItem from="1671408524739" duration="2748000" />
+      <workItem from="1671408524739" duration="9068000" />
     </task>
     <servers />
   </component>

@@ -47,8 +47,7 @@
     <result column="ma_idx" property="logIndex" jdbcType="BIGINT" />
     <result column="ma_type" property="logType" jdbcType="TINYINT" />
     <result column="ma_create_date" property="logCreateDate" jdbcType="TIMESTAMP" />
-<!--<association property="memberLogActionVO" javaType="MemberLogActionVO" column="ma_idx" autoMapping="true" />-->
-<!--<association property="memberTripVO" javaType="MemberTripVO" column="mt_ct_idx" autoMapping="true" />-->
+
 
 </resultMap>
 
