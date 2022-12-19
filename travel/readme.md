@@ -119,5 +119,9 @@ mysqlCreate.sql 로 크리에이트 하시면됩니다.
 #yml 프로필별 세팅이 적용되지 않을 때 적용방법은 이미지로 같이 첨부하겠습니다.
 
         
+#git 정보
+
+    https://github.com/gunwoo1124/travel.git
+    git@github.com:gunwoo1124/travel.git
 
 
